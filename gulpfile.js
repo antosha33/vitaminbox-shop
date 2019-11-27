@@ -11,30 +11,24 @@ var gulp           = require('gulp'),
 // Обновление страниц сайта на локальном сервере
 gulp.task('browser-sync', function() {
 	browserSync({
-		proxy: "opencart.loc",
+		proxy: "vitaminbox",
 		notify: false
 	});
 });
 
 // Компиляция stylesheet.css
 gulp.task('sass', function() {
-	return gulp.src('catalog/view/theme/apple/stylesheet/stylesheet.sass')
+	return gulp.src('catalog/view/theme/vitaminbox/stylesheet/stylesheet.sass')
 		.pipe(sass({
 			includePaths: bourbon.includePaths
 		}).on('error', sass.logError))
 		.pipe(autoprefixer(['last 15 versions']))
 		.pipe(cleanCSS())
-		.pipe(gulp.dest('catalog/view/theme/apple/stylesheet/'))
+		.pipe(gulp.dest('catalog/view/theme/vitaminbox/stylesheet/'))
 		.pipe(browserSync.reload({stream: true}))
 });
 
-// Наблюдение за файлами
-gulp.task('watch', ['sass', 'browser-sync'], function() {
-	gulp.watch('catalog/view/theme/apple/stylesheet/stylesheet.sass', ['sass']);
-	gulp.watch('catalog/view/theme/apple/template/**/*.tpl', browserSync.reload);
-	gulp.watch('catalog/view/theme/apple/js/**/*.js', browserSync.reload);
-	gulp.watch('catalog/view/theme/apple/libs/**/*', browserSync.reload);
-});
+
 
 // Выгрузка изменений на хостинг
 gulp.task('deploy', function() {
@@ -46,10 +40,19 @@ gulp.task('deploy', function() {
 		log: gutil.log
 	});
 	var globs = [
-	'catalog/view/theme/apple/**'
+	'catalog/view/theme/vitaminbox/**'
 	];
 	return gulp.src(globs, {buffer: false})
 	.pipe(conn.dest('/path/to/folder/on/server'));
 });
 
-gulp.task('default', ['watch']);
+// Наблюдение за файлами
+
+gulp.task('watch', function() {
+	gulp.watch('catalog/view/theme/vitaminbox/stylesheet/stylesheet.sass', gulp.parallel('sass'));
+	gulp.watch('catalog/view/theme/vitaminbox/template/**/*.twig', browserSync.reload);
+	gulp.watch('catalog/view/theme/vitaminbox/js/**/*.js', browserSync.reload);
+	gulp.watch('catalog/view/theme/vitaminbox/libs/**/*', browserSync.reload);
+});
+
+gulp.task('default', gulp.parallel('watch', 'sass', 'browser-sync'));
