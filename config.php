@@ -19,6 +19,7 @@ define('DIR_LOGS', DIR_STORAGE . 'logs/');
 define('DIR_MODIFICATION', DIR_STORAGE . 'modification/');
 define('DIR_SESSION', DIR_STORAGE . 'session/');
 define('DIR_vitaminbox', DIR_STORAGE . 'vitaminbox/');
+define('DIR_UPLOAD', 'W:/domains/vitaminbox/system/upload');
 
 // DB
 define('DB_DRIVER', 'mysqli');
