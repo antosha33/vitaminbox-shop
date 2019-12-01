@@ -59,8 +59,7 @@ $(document).ready(function () {
     var value = $('#search input[name=\'search\']').val();
 
     if (value) {
-      url += '&search=' + encodeURIC
-      omponent(value);
+      url += '&search=' + encodeURIComponent(value);
     }
 
     location = url;

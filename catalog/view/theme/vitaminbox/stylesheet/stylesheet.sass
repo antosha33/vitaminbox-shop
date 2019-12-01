@@ -45,6 +45,11 @@ header
   a.active
     background-color: #dfdfdf
 
+.navbar
+  margin-bottom: 0px
+  .navbar-collapse
+    padding: 0px
+
 .cart-search
   display: flex
   justify-content: flex-end
@@ -60,6 +65,8 @@ header
     cursor: pointer
     .fa-search
       color: $accent
+  .fa-search
+    font-size: 24px
 
 .fa-search
   transition: all .3s ease
@@ -85,7 +92,7 @@ header
 		background-color: $grey1
 		font:
 			style: italic
-			size: 13px
+			size: 16px
 		color: $text
 		transition: background-color .25s ease, box-shadow .25s ease
 		box-shadow: transparent 0 0 0 1px inset
@@ -93,18 +100,29 @@ header
 			background-color: $grey2
 			box-shadow: #777 0 0 0 1px inset
 	.input-group-btn
-
 		position: absolute
-		right: 26px
+		right: 0px
 		.btn
 			padding: 9px 10px
 			border: none
 				radius: 0
 			background-color: transparent
-			color: #999
+			color: #6b6b6b
 			font-size: 13px
+
+
 
 #search
   display: none
+  height: 35px
+  margin-bottom: 5px
+  margin-top: 5px
+  .input-group-btn
+    width: auto
+    display: block
+    z-index: 5
+    transition: all .3s ease
+
+
 
 @import "media"
