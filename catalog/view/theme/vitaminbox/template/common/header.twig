@@ -52,15 +52,26 @@
 							{% endif %}
 						</div>
 					</div>
-					<div class="col-sm-10 col-md-6 col-lg-6">
+					<div class="col-sm-8 col-md-6 col-lg-6">
+
+
+
+        <nav id="menu" class="navbar">
+          <div class="navbar-header"><span class="toggle-top-text hidden-lg hidden-md hidden-sm"><?php echo $text_information; ?>:</span>
+            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+          </div>
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
 						{% if informations %}
-								<ul class="list-unstyled header-articles">
+								<ul class="nav navbar-nav list-unstyled header-articles">
 									{% for information in informations %}
 											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
 									{% endfor %}
-								{% endif %}
+
 							</ul>
-					</div>
+            {% endif %}
+          </div>
+        </nav>
+				</div>
 					<div class="col-sm-2 col-md-3 col-lg-3">
             <div class="cart-search">
   						<div class="search-button"><i class="fa fa-search" aria-hidden="true"></i></div>
