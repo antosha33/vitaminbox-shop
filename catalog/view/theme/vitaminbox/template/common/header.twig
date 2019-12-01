@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+	<html
+	dir="{{ direction }}" lang="{{ lang }}"> <!--<![endif]-->
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{ title }}</title>
+		<base href="{{ base }}"/>
+		{% if description %}
+			<meta name="description" content="{{ description }}"/>
+		{% endif %}
+		{% if keywords %}
+			<meta name="keywords" content="{{ keywords }}"/>
+		{% endif %}
+		<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+		<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+		<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+		<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+		<link href="catalog/view/theme/vitaminbox/stylesheet/stylesheet.css" rel="stylesheet">
+		{% for style in styles %}
+			<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+		{% endfor %}
+		{% for script in scripts %}
+			<script src="{{ script }}" type="text/javascript"></script>
+		{% endfor %}
+		<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+		{% for link in links %}
+			<link href="{{ link.href }}" rel="{{ link.rel }}"/>
+		{% endfor %}
+		{% for analytic in analytics %}
+			{{ analytic }}
+		{% endfor %}
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2 col-md-3 col-lg-3">
+						<div id="logo">
+							{% if logo %}
+								<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></a>
+							{% else %}
+								<h1>
+									<a href="{{ home }}">{{ name }}</a>
+								</h1>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-sm-10 col-md-6 col-lg-6">
+						{% if informations %}
+								<ul class="list-unstyled header-articles">
+									{% for information in informations %}
+											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
+									{% endfor %}
+								{% endif %}
+							</ul>
+					</div>
+					<div class="col-sm-2 col-md-3 col-lg-3">
+            <div class="cart-search">
+  						<div class="search-button"><i class="fa fa-search" aria-hidden="true"></i></div>
+						  <div class="header-cart">{{ cart }}</div>          
+            </div>
+					</div>
+				</div>
+            <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 search-place">
+            {{search}}
+            </div>     
+          </div>
+			</div>
+		</header>
+		{{ menu }}
+		<script>
+
+      const articlesButtons = document.querySelector('.header-articles');
+      Array.from(articlesButtons.children).forEach(it=>{
+        if(it.children[0].innerText === `{{heading_title}}`) it.classList.add('active');
+      });
+
+			const searchFront = () => {
+
+      }
+
+      const searchButton = document.querySelector('.search-button');
+      const place = document.querySelector('.search-place');
+      const elem = document.createElement(`div`);
+
+      elem.innerHTML = `{{search}}`;
+      searchButton.addEventListener('click', () => {
+
+      const test = getComputedStyle(document.querySelector('#search.input-group'));
+      if(test.display === 'none'){
+        document.querySelector('#search.input-group').style.display = 'block';
+      }else{
+        document.querySelector('#search.input-group').style.display = 'none';
+      }
+
+
+      if (!document.querySelector('#search.input-group')) {
+        
+      } else {
+      
+      } 
+      
+      searchFront();
+
+
+      });
+
+      const articlesButtonsHandler = (e) =>{
+        e.target.classList.add('active');
+      }
+
+
+
+
+
+		</script>
+	</body>
+</html></body></html>

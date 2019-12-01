@@ -13,7 +13,7 @@ gulp.task('browser-sync', function() {
 	browserSync({
 		proxy: "vitaminbox",
 		notify: false
-	});
+  });
 });
 
 // Компиляция stylesheet.css
@@ -28,7 +28,10 @@ gulp.task('sass', function() {
 		.pipe(browserSync.reload({stream: true}))
 });
 
-
+function reload(done){
+  browserSync.reload();
+  done();
+}
 
 // Выгрузка изменений на хостинг
 gulp.task('deploy', function() {
@@ -50,9 +53,9 @@ gulp.task('deploy', function() {
 
 gulp.task('watch', function() {
 	gulp.watch('catalog/view/theme/vitaminbox/stylesheet/stylesheet.sass', gulp.parallel('sass'));
-	gulp.watch('catalog/view/theme/vitaminbox/template/**/*.twig', browserSync.reload);
-	gulp.watch('catalog/view/theme/vitaminbox/js/**/*.js', browserSync.reload);
-	gulp.watch('catalog/view/theme/vitaminbox/libs/**/*', browserSync.reload);
+	gulp.watch('catalog/view/theme/vitaminbox/template/**/*.twig', reload);
+	gulp.watch('catalog/view/theme/vitaminbox/js/**/*.js', reload);
+	gulp.watch('catalog/view/theme/vitaminbox/libs/**/*', reload);
 });
 
 gulp.task('default', gulp.parallel('watch', 'sass', 'browser-sync'));

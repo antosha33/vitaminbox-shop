@@ -11,7 +11,7 @@ define('HTTPS_CATALOG', 'http://vitaminbox/');
 define('DIR_APPLICATION', 'W:/domains/vitaminbox/admin/');
 define('DIR_SYSTEM', 'W:/domains/vitaminbox/system/');
 define('DIR_IMAGE', 'W:/domains/vitaminbox/image/');
-define('DIR_STORAGE', 'W:/domains/storage/');
+define('DIR_STORAGE', 'W:/storage/');
 define('DIR_CATALOG', 'W:/domains/vitaminbox/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');

@@ -4,4 +4,107 @@
 
 //Custom styles here
 
+body
+  font-size: 16px
+  min-width: 320px
+  position: relative
+  line-height: 1.6
+  overflow-x: hidden
+  font-family: MyriadSetProText
+
+header
+ #logo
+    height: 70px
+    display: flex
+    justify-content: start
+    align-items: center
+    img
+      width: 180px
+
+
+.header-articles
+  display: flex
+  justify-content: space-between
+  width: 100%
+  a
+    height: 70px
+    background-color: #f5f5f5
+    width: 100%
+    text-align: center
+    text-decoration: none
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #6b6b6b
+    transition: all .2s ease
+    &:hover
+      background-color: $grey2
+      cursor: pointer
+    p
+      margin: 0
+  a.active
+    background-color: #dfdfdf
+
+.cart-search
+  display: flex
+  justify-content: flex-end
+  align-items: center
+
+.search-button
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-right: 25px  
+  transition: all .3s ease
+  &:hover
+    cursor: pointer
+    .fa-search
+      color: $accent
+
+.fa-search
+  transition: all .3s ease
+
+.header-cart
+  height: 70px
+  display: flex
+  justify-content: center
+  align-items: center
+  button
+    background-color: #fff
+  i
+    display: none
+
+#search
+	width: 100%
+	font-family: Arial, sans-serif
+	.form-control
+		padding: 5px 16px
+		height: 35px
+		border: none
+			radius: 0
+		background-color: $grey1
+		font:
+			style: italic
+			size: 13px
+		color: $text
+		transition: background-color .25s ease, box-shadow .25s ease
+		box-shadow: transparent 0 0 0 1px inset
+		&:focus, &:hover
+			background-color: $grey2
+			box-shadow: #777 0 0 0 1px inset
+	.input-group-btn
+
+		position: absolute
+		right: 26px
+		.btn
+			padding: 9px 10px
+			border: none
+				radius: 0
+			background-color: transparent
+			color: #999
+			font-size: 13px
+
+#search
+  display: none
+
 @import "media"
