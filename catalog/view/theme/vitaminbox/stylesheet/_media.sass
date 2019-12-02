@@ -5,7 +5,8 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px)
-	/**/
+  .search-button
+    margin-right: 20px
 
 
 /* Medium Devices, Desktops */
@@ -13,18 +14,82 @@
   .header-articles
     a
       font-size: 14px
-  
   .cart-search
     justify-content: center
-
-
+  #cart
+    button
+      padding: 10px 5px
+      span
+        font-size: 14px
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px)
-	/**/
+  .header-articles
+    width: auto
+    a
+      height: 40px  
+  .nav.navbar-nav
+    display: block
+  .navbar
+    .navbar-collapse
+      top: 68px
+      width: 768px
+      display: none
+      ul
+        display: block
+        a
+          display: block
+  #logo
+    justify-content: center
+  .header-cart
+    i
+      display: inline-block
+      margin-right: 5px
+  #cart
+    background-color: transparent
+    button
+      background-color: transparent
+      color: $text
+      padding: 5px 2px
+      span
+        font-size: 18px
+    &:hover
+      background-color: transparent
+  .cart-search
+    justify-content: space-around
+  .search-button
+    color: $text
+    .fa-search
+      font-size: 18px
+  .navbar
+    height: 68px
+    display: flex
+    justify-content: center
+    align-items: center
+    .navbar-header
+      .navbar-toggle
+        margin: 0px
+        i
+          font-size: 24px
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px)
-	/**/
+  .navbar
+    .navbar-header
+      .navbar-toggle
+        i
+          font-size: 20px
+  .search-button
+    margin-right: 0px
+  .cart-search
+    justify-content: space-between
+  .search-button
+    .fa-search
+      font-size: 14px
+  #cart
+
+    button
+      span
+        font-size: 14px
 
 
 /* Custom, iPhone Retina */

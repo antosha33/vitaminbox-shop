@@ -42,7 +42,7 @@
 		<header>
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-3 col-md-3 col-lg-3">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
 						<div id="logo">
 							{% if logo %}
 								<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive"/></a>
@@ -53,29 +53,29 @@
 							{% endif %}
 						</div>
 					</div>
-					<div class="col-sm-9 col-md-6 col-lg-6">
-        <nav id="menu" class="navbar">
-          <div class="navbar-header"><span class="toggle-top-text hidden-lg hidden-md hidden-sm"><?php echo $text_information; ?>:</span>
-            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-          </div>
-          <div class="collapse navbar-collapse navbar-ex1-collapse">
-						{% if informations %}
-								<ul class="nav navbar-nav list-unstyled header-articles">
-									{% for information in informations %}
-											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
-									{% endfor %}
-
-							</ul>
-            {% endif %}
-          </div>
-        </nav>
-				</div>
-					<div class="col-sm-12 col-md-3 col-lg-3">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-sm-push-6">
             <div class="cart-search">
   						<div class="search-button"><i class="fa fa-search" aria-hidden="true"></i></div>
 						  <div class="header-cart">{{ cart }}</div>          
             </div>
 					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-2 col-sm-pull-3">
+            <nav id="menu" class="navbar">
+              <div class="navbar-header"><span class="toggle-top-text hidden-lg hidden-md hidden-sm"></span>
+                <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+						  {% if informations %}
+								<ul class="nav navbar-nav list-unstyled header-articles">
+									{% for information in informations %}
+											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
+									{% endfor %}
+							</ul>
+              {% endif %}
+            </div>
+          </nav>
+				</div>
+
 				</div>
             <div class="row">
             <div class="col-lg-6 col-lg-offset-3 search-place bounce">
@@ -130,8 +130,28 @@
         e.target.classList.add('active');
       }
 
+    const navToggleHandler = () => {
+      const menuwrapper = document.querySelector('.collapse.navbar-collapse');
+      const menu = document.querySelector('.nav.navbar-nav.list-unstyled.header-articles');
+      menu.classList.add('animated');
+      menu.classList.add('fadeIn');
+      menu.classList.add('faster');
+      if(menuwrapper.querySelector('.nav.navbar-nav.list-unstyled.header-articles')){
+      const newMenu = document.createElement('div');
+      newMenu.classList.add('container');
+      newMenu.innerHTML='<div class="row"></div>'
+      newMenu.childNodes[0].append(menu.cloneNode(true));
+      const aimToPaste = document.querySelector('header');
+      aimToPaste.append(newMenu);
+      menu.remove();
+      }else{
+         menu.style.display == 'none' ? menu.style.display = 'block':  menu.style.display = 'none';
+      }
 
+    }
 
+    const navToggle = document.querySelector('.btn.btn-navbar.navbar-toggle');
+    navToggle.addEventListener('click', navToggleHandler);
 
 
 		</script>
