@@ -17,5 +17,8 @@
     "gulp-util": "^3.0.8",
     "node-bourbon": "^4.2.8",
     "vinyl-ftp": "^0.6.1"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.2"
   }
 }
