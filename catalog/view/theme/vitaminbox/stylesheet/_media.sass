@@ -21,6 +21,7 @@
       padding: 10px 5px
       span
         font-size: 14px
+  
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px)
   .header-articles
@@ -31,6 +32,8 @@
   .nav.navbar-nav
     display: block
   .navbar
+    .btn .btn-navbar
+      display: block     
     .navbar-collapse
       top: 68px
       width: 768px
@@ -67,7 +70,6 @@
     justify-content: center
     align-items: center
     .navbar-header
-      .navbar-toggle
         margin: 0px
         i
           font-size: 24px
@@ -96,6 +98,24 @@
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px)
 	/**/
+
+
+@media only all and (width : 768px)
+  .navbar
+    .navbar-collapse
+      width: 100%
+      .header-articles
+        width: 100%
+        display: flex
+        a
+          display: flex
+          justify-content: center
+          align-content: center
+          border-bottom: none
+    
+
+
+
 
 
 /*==========  Mobile First  ==========*/
