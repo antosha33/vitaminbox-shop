@@ -40,6 +40,7 @@ header
     &:hover
       background-color: $grey2
       cursor: pointer
+      color: $accent
     p
       margin: 0
   a.active
@@ -61,11 +62,11 @@ header
   align-items: center
   margin-right: 40px  
   transition: all .3s ease
-  color: $grey2
+  color: $accent
   &:hover
     cursor: pointer
     .fa-search
-      color: $accent
+      color: $accent2
   .fa-search
     font-size: 24px
 
@@ -126,31 +127,48 @@ header
     transition: all .3s ease
 
 #cart
-  background-color: $accent
   transition: all .3s ease
   button
-    background-color: $accent
+    border-radius: none
     transition: all .3s ease
-    color: #fff
+    color: $text
   &:hover
     background-color: $accent2
     button
       background-color: $accent2
+      color: #fff
 
 .swiper-viewport
   box-shadow: none
   border-radius: none
   border: none
-  .swiper-pagination
-    display: none
+  margin: 0 0 10px
+
+.swiper-control
+  display: flex
+  justify-content: space-between
+  .swiper-link
+    width: 268px
+    height: 68px
+    background-color: $accent
+    color: #fff
+    justify-content: center
+    align-items: center
+    display: flex
+    transition: all .3s ease
+    p
+      margin: 0
+    &:hover
+      background-color: $accent2
+      cursor: pointer      
   .swiper-pager
-    position: absolute
-    margin-top: 25px
+    position: relative
     width: 268px
     height: 68px
     right: 0px
     top: 100%
     background-color: $grey1
+    transition: all .5s ease
     .swiper-button-next
       opacity: 1
       right: 0px
@@ -187,7 +205,25 @@ header
         width: auto
         height: auto
         font-size: 28px
-  .mode
-    background-color: $accent
-    left: 0px
+
+#common-home
+  margin-top: 50px
+
+.list-group
+  a
+    transition: all .3s ease
+  a.list-group-item
+    &:hover
+      background-color: $accent2
+      color: #fff
+    &:first-child,&:last-child
+      border-radius: 0px
+  .list-group-item.active
+      background-color: $accent
+      color: #fff
+
+.list-group-item
+  border: 0px
+
+
 @import "media"

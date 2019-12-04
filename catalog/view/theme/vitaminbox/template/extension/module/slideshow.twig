@@ -5,24 +5,25 @@
       {% endfor %} </div>
   </div>
   <div class="swiper-pagination slideshow{{ module }}"></div>
-    <div class="swiper-pager mode">
   </div>
-  <div class="swiper-pager">
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+
+  <div class="swiper-control">
+    <div class="swiper-link"><p>Перейти в каталог</p></div>
+    <div class="swiper-pager">
+     <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#slideshow{{ module }}').swiper({
 	mode: 'horizontal',
 	slidesPerView: 1,
-	pagination: '.slideshow{{ module }}',
-	paginationClickable: true,
 	nextButton: '.swiper-button-next',
     prevButton: '.swiper-button-prev',
-    spaceBetween: 30,
+    spaceBetween: 0,
 	autoplay: 2500,
-    autoplayDisableOnInteraction: true,
+  autoplayDisableOnInteraction: false,
 	loop: true
 });
 --></script>
