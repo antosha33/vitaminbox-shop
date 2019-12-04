@@ -211,19 +211,34 @@ header
 
 .list-group
   a
-    transition: all .3s ease
+    transition: background .25s ease, color .25s ease, text-indent .25s ease
   a.list-group-item
     &:hover
       background-color: $accent2
       color: #fff
+      text-indent: 10px
     &:first-child,&:last-child
       border-radius: 0px
   .list-group-item.active
       background-color: $accent
       color: #fff
 
+.list-group .list-group-item.active
+  text-indent: 10px
+
 .list-group-item
   border: 0px
+
+#content
+  margin-bottom: 70px
+
+#common-home
+  h3
+    text-align: center
+    font-size: 28px
+    font-family: MyriadSetProThin, sans-serif
+
+.product-layout
 
 
 @import "media"
