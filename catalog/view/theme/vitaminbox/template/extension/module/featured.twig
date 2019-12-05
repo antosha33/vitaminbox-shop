@@ -1,54 +1,144 @@
 <h3>{{ heading_title }}</h3>
 <div class="row">
- {% for product in products %}
-  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 mode">
-    <div class="product-thumb transition">
-          <div class="caption top-name">
-        <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-      </div>
-      <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
-      
-      <div class="manager">
+	{% for product in products %}
+		<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 mode">
+			<div class="product-thumb transition">
+				<div class="caption top-name">
+					<h4>
+						<a href="{{ product.href }}">{{ product.name }}</a>
+					</h4>
+				</div>
+				<div class="image">
+					<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/></a>
+				</div>
 
-      <div class="price-manager">
-      <div class="caption bottom">
-        <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-        <p>{{ product.description }}</p>
-        {% if product.price %}
-        <p class="price">
-          {% if product.upc %}
-          <span class="price-show">{{ product.upc }}</span>
-          {% endif %}
-          {% if not product.special %}
-          {{ product.price }}
-          {% else %}
-          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-          {% endif %}
-          {% if product.tax %}
-          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-          {% endif %}
-        </p>
-        {% endif %}
-      </div>
-      <div class="button-group">
-        <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
-      </div>
-      </div>
-      <div class="quantity-manager">
-        <div class="quantity">1 кг.</div>
-        <div class="control">
-          <div class="decrease"><i class="fa fa-minus-square" aria-hidden="true"></i></div>
-          <div class="increase"><i class="fa fa-plus-square" aria-hidden="true"></i></div>
-        </div>
-        
-      </div>
+				<div class="manager">
 
-      </div>
+					<div class="price-manager">
+						<div class="caption bottom">
+							<h4>
+								<a href="{{ product.href }}">{{ product.name }}</a>
+							</h4>
+							<p>{{ product.description }}</p>
+							{% if product.price %}
+								<p class="price">
 
-    </div>
-  </div>
-  {% endfor %}
+									{% if not product.special %}
+										{{ product.price }}
+									{% else %}
+										<span class="price-new">{{ product.special }}</span>
+										<span class="price-old">{{ product.price }}</span>
+									{% endif %}
+								</p>
+							{% endif %}
+						</div>
+						<div class="button-group">
+							<button type="button" onclick="cart.add('{{ product.product_id }}', '200');">
+								<i class="fa fa-shopping-cart"></i>
+								<span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span>
+							</button>
+							<button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');">
+								<i class="fa fa-heart"></i>
+							</button>
+							<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');">
+								<i class="fa fa-exchange"></i>
+							</button>
+						</div>
+					</div>
+					<div class="quantity-manager">
+						<div class="quantity">
+							{% if product.upc %}
+								<span>
+									{% if product.upc == 'шт.' %}
+										{{1}}
+									{% elseif product.upc == 'кг.' %}
+										{{1}}
+									{% else %}
+										{{100}}
+									{% endif %}
+								</span>
+								{{ product.upc }}
+							{% endif %}
+						</div>
+						<div class="control">
+							<div class="decrease" data-upc="{{product.upc}}" data-quantity="{{product.quantity}}" data-price="{{product.price}}">
+								<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</div>
+							<div class="increase" data-upc="{{product.upc}}" data-quantity="{{product.quantity}}" data-price="{{product.price}}">
+								<i class="fa fa-angle-up" aria-hidden="true"></i>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	{% endfor %}
 </div>
-<script>console.log(`{{stock}}`) </script>
+<script>
+
+	const updatePrice = ({manager, upc, updateQuantity, price}) => {
+const priceELEM = manager.querySelector('.price-manager .price');
+const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
+let onlyPrice = price.match(regExp)[0];
+onlyPrice = parseFloat(onlyPrice);
+if (upc === 'грамм') {
+onlyPrice = + onlyPrice * updateQuantity / 100;
+} else {
+onlyPrice = + onlyPrice * updateQuantity;
+} priceELEM.innerHTML = `${
+onlyPrice.toFixed(2)
+} руб.`
+}
+
+const decreaseHandler = (e) => {
+const stockQuantity = + e.currentTarget.getAttribute('data-quantity');
+const upc = e.currentTarget.getAttribute('data-upc');
+const price = e.currentTarget.getAttribute('data-price');
+const manager = e.currentTarget.parentNode.parentNode.parentNode
+const decreaseQuantity = upc === "грамм" ? 100 : 1;
+const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
+const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+const updateQuantity = startQuantity - decreaseQuantity;
+if (updateQuantity < 100 && upc === "грамм") {
+return;
+}
+if (updateQuantity < 1) {
+return;
+}
+quantityELEM.innerHTML = `${updateQuantity} `;
+updatePrice({manager, upc, updateQuantity, price});
+}
+
+
+const increaseHandler = (e) => {
+const stockQuantity = + e.currentTarget.getAttribute('data-quantity');
+const upc = e.currentTarget.getAttribute('data-upc');
+const price = e.currentTarget.getAttribute('data-price');
+const manager = e.currentTarget.parentNode.parentNode.parentNode
+const decreaseQuantity = upc === "грамм" ? 100 : 1;
+const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
+const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+const updateQuantity = startQuantity + decreaseQuantity;
+if (stockQuantity < updateQuantity) {
+return;
+}
+quantityELEM.innerHTML = `${updateQuantity} `;
+updatePrice({manager, upc, updateQuantity, price});
+}
+
+
+const buttonsDecrease = document.querySelectorAll('.quantity-manager .control .decrease');
+
+Array.from(buttonsDecrease).forEach(el => {
+el.addEventListener('click', decreaseHandler)
+})
+
+const buttonsIncrease = document.querySelectorAll('.quantity-manager .control .increase');
+
+Array.from(buttonsIncrease).forEach(el => {
+el.addEventListener('click', increaseHandler)
+})
+</script>
