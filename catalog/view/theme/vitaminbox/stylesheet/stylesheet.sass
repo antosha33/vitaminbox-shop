@@ -237,8 +237,83 @@ header
     text-align: center
     font-size: 28px
     font-family: MyriadSetProThin, sans-serif
+    margin-bottom: 50px
 
 .product-layout
+  .product-thumb
+    padding: 10px
+    margin-bottom: 35px
+    position: relative
+    .manager
+      display: flex
+      color: $text
+      font-family: MyriadSetProSemiBold, sans-serif
+      font-size: 18px
+      .price-manager
+        width: 50%
+        user-select: none
+        .caption.bottom
+          h4
+            display: none
+          p
+            display: none
+          .price
+            text-align: center
+            display: block
+          .price-new, .price-tax
+            display: none  
+        .button-group    
+          height: 25px
+          button[data-toggle="tooltip"]
+            display: none
+          button
+            display: block
+            width: 100%
+            background-color: $accent
+            border: none
+            button
+            color: #fff
+            font-family: MyriadSetProText, sans-serif
+            transition: all .3s ease
+            padding: 0px
+            i
+              display: none
+            &:hover
+              background-color: $accent2
+            &:focus
+              outline-color: transparent 
 
-
+      .quantity-manager
+        width: 50%
+        text-align: center
+        .quantity
+          margin-bottom: 10px
+        .control
+          height: 28px
+          width: 100%
+          display: flex
+          justify-content: space-around
+          background-color: $grey1
+          .increase, .decrease
+            width: 50%
+            font-size: 14px
+            color: $text
+            transition: all .3s ease
+            display: flex
+            align-items: center
+            justify-content: center
+            i
+              display: block
+            &:hover
+              background-color: $grey2
+              color: $accent
+              cursor: pointer
+  .caption.top-name
+    display: block
+    h4
+      a
+        text-decoration: none
+        font-size: 22px
+        font-family: MyriadSetProText, sans-serif
+        color: $text
 @import "media"
