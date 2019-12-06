@@ -13,7 +13,7 @@
 				</div>
 
 				<div class="manager">
-
+					{% if product.quantity > 0 %}
 					<div class="price-manager">
 						<div class="caption bottom">
 							<h4>
@@ -22,7 +22,6 @@
 							<p>{{ product.description }}</p>
 							{% if product.price %}
 								<p class="price">
-
 									{% if not product.special %}
 										{{ product.price }}
 									{% else %}
@@ -33,7 +32,7 @@
 							{% endif %}
 						</div>
 						<div class="button-group">
-							<button type="button" onclick="cart.add('{{ product.product_id }}', '200');">
+							<button type="button" data-add-to-cart="data-add-to-cart" data-product-id="{{product.product_id}}">
 								<i class="fa fa-shopping-cart"></i>
 								<span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span>
 							</button>
@@ -57,7 +56,7 @@
 										{{100}}
 									{% endif %}
 								</span>
-								{{ product.upc }}
+								<span>{{ product.upc }}</span>
 							{% endif %}
 						</div>
 						<div class="control">
@@ -70,63 +69,78 @@
 						</div>
 
 					</div>
-
+					{% else %}
+					<div class="out-of-stock"><p>Нет в наличии</p></div>
+					{% endif %}
 				</div>
-
 			</div>
 		</div>
 	{% endfor %}
 </div>
 <script>
 
-	const updatePrice = ({manager, upc, updateQuantity, price}) => {
-const priceELEM = manager.querySelector('.price-manager .price');
-const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
-let onlyPrice = price.match(regExp)[0];
-onlyPrice = parseFloat(onlyPrice);
-if (upc === 'грамм') {
-onlyPrice = + onlyPrice * updateQuantity / 100;
-} else {
-onlyPrice = + onlyPrice * updateQuantity;
-} priceELEM.innerHTML = `${
-onlyPrice.toFixed(2)
-} руб.`
+const addToCart = (e) => {
+	const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
+	const productId = e.currentTarget.getAttribute('data-product-id');
+	let quantityForCart = +targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+	const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
+	upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
+	cart.add(productId, quantityForCart);
+}
+
+const updatePrice = ({manager, upc, updateQuantity, price}) => {
+		const priceELEM = manager.querySelector('.price-manager .price');
+		const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
+		let onlyPrice = price.match(regExp)[0];
+		onlyPrice = parseFloat(onlyPrice);
+		if (upc === 'грамм') {
+			onlyPrice = + onlyPrice * (updateQuantity - 100) / 100 + onlyPrice;
+		} else {
+			onlyPrice = + onlyPrice * updateQuantity;
+		} priceELEM.innerHTML = `${onlyPrice.toFixed(2)} руб.`
+}
+
+const getAttributes = (elem) => {
+	const stockQuantity = + elem.getAttribute('data-quantity');
+	const upc = elem.getAttribute('data-upc');
+	const price = elem.getAttribute('data-price');
+	return {
+		stockQuantity,
+		upc,
+		price
+	}
 }
 
 const decreaseHandler = (e) => {
-const stockQuantity = + e.currentTarget.getAttribute('data-quantity');
-const upc = e.currentTarget.getAttribute('data-upc');
-const price = e.currentTarget.getAttribute('data-price');
-const manager = e.currentTarget.parentNode.parentNode.parentNode
-const decreaseQuantity = upc === "грамм" ? 100 : 1;
-const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
-const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-const updateQuantity = startQuantity - decreaseQuantity;
-if (updateQuantity < 100 && upc === "грамм") {
-return;
-}
-if (updateQuantity < 1) {
-return;
-}
-quantityELEM.innerHTML = `${updateQuantity} `;
-updatePrice({manager, upc, updateQuantity, price});
+	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
+	const manager = e.currentTarget.parentNode.parentNode.parentNode
+	const decreaseQuantity = upc === "грамм" ? 50 : 1;
+	const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
+	const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+	const updateQuantity = startQuantity - decreaseQuantity;
+	if (updateQuantity < 100 && upc === "грамм") {
+		return;
+	}
+	if (updateQuantity < 1) {
+		return;
+	}
+	quantityELEM.innerHTML = `${updateQuantity} `;
+	updatePrice({manager, upc, updateQuantity, price});
 }
 
 
 const increaseHandler = (e) => {
-const stockQuantity = + e.currentTarget.getAttribute('data-quantity');
-const upc = e.currentTarget.getAttribute('data-upc');
-const price = e.currentTarget.getAttribute('data-price');
-const manager = e.currentTarget.parentNode.parentNode.parentNode
-const decreaseQuantity = upc === "грамм" ? 100 : 1;
-const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
-const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-const updateQuantity = startQuantity + decreaseQuantity;
-if (stockQuantity < updateQuantity) {
-return;
-}
-quantityELEM.innerHTML = `${updateQuantity} `;
-updatePrice({manager, upc, updateQuantity, price});
+	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
+	const manager = e.currentTarget.parentNode.parentNode.parentNode
+	const decreaseQuantity = upc === "грамм" ? 50 : 1;
+	const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
+	const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+	const updateQuantity = startQuantity + decreaseQuantity;
+	if (stockQuantity < updateQuantity) {
+		return;
+	}
+	quantityELEM.innerHTML = `${updateQuantity} `;
+	updatePrice({manager, upc, updateQuantity, price});
 }
 
 
@@ -141,4 +155,11 @@ const buttonsIncrease = document.querySelectorAll('.quantity-manager .control .i
 Array.from(buttonsIncrease).forEach(el => {
 el.addEventListener('click', increaseHandler)
 })
+
+const buttonsAddToCart = document.querySelectorAll('button[data-add-to-cart="data-add-to-cart"]');
+
+Array.from(buttonsAddToCart).forEach(el => {
+el.addEventListener('click', addToCart)
+})
+
 </script>

@@ -276,10 +276,11 @@ class ControllerCheckoutCart extends Controller {
 
 		if ($product_info) {
 			if (isset($this->request->post['quantity'])) {
-				$quantity = (int)$this->request->post['quantity'];
+				$quantity = (float)$this->request->post['quantity'];
 			} else {
 				$quantity = 1;
 			}
+
 
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);
@@ -333,6 +334,8 @@ class ControllerCheckoutCart extends Controller {
 				$taxes = $this->cart->getTaxes();
 				$total = 0;
 		
+
+
 				// Because __call can not keep var references so we put them into an array. 			
 				$total_data = array(
 					'totals' => &$totals,
@@ -374,6 +377,9 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
 			}
+
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

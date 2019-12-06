@@ -140,8 +140,9 @@ $(document).ready(function () {
 
 // Cart add remove functions
 var cart = {
+  
   'add': function (product_id, quantity) {
-    console.log(product_id, quantity);
+    console.log(typeof (quantity) != 'undefined' ? quantity : 1);
     $.ajax({
       url: 'index.php?route=checkout/cart/add',
       type: 'post',

@@ -20,6 +20,7 @@ final class MySQL {
 	}
 
 	public function query($sql) {
+		exit;
 		if ($this->connection) {
 			$resource = mysql_query($sql, $this->connection);
 

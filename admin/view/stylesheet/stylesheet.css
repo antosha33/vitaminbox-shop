@@ -777,6 +777,14 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 
+.form-group.mode{
+	display: none;
+}
+
+
+
+
+
 @font-face {
 	font-family: 'opencart';
 	src: url('fonts/opencart.eot?h4wsna');
