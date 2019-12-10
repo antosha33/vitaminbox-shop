@@ -21,7 +21,7 @@
 							</h4>
 							<p>{{ product.description }}</p>
 							{% if product.price %}
-								<p class="price">
+								<p class="price for-animated">
 									{% if not product.special %}
 										{{ product.price }}
 									{% else %}
@@ -77,89 +77,4 @@
 		</div>
 	{% endfor %}
 </div>
-<script>
 
-const addToCart = (e) => {
-	const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
-	const productId = e.currentTarget.getAttribute('data-product-id');
-	let quantityForCart = +targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-	const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
-	upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
-	cart.add(productId, quantityForCart);
-}
-
-const updatePrice = ({manager, upc, updateQuantity, price}) => {
-		const priceELEM = manager.querySelector('.price-manager .price');
-		const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
-		let onlyPrice = price.match(regExp)[0];
-		onlyPrice = parseFloat(onlyPrice);
-		if (upc === 'грамм') {
-			onlyPrice = + onlyPrice * (updateQuantity - 100) / 100 + onlyPrice;
-		} else {
-			onlyPrice = + onlyPrice * updateQuantity;
-		} priceELEM.innerHTML = `${onlyPrice.toFixed(2)} руб.`
-}
-
-const getAttributes = (elem) => {
-	const stockQuantity = + elem.getAttribute('data-quantity');
-	const upc = elem.getAttribute('data-upc');
-	const price = elem.getAttribute('data-price');
-	return {
-		stockQuantity,
-		upc,
-		price
-	}
-}
-
-const decreaseHandler = (e) => {
-	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
-	const manager = e.currentTarget.parentNode.parentNode.parentNode
-	const decreaseQuantity = upc === "грамм" ? 50 : 1;
-	const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
-	const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-	const updateQuantity = startQuantity - decreaseQuantity;
-	if (updateQuantity < 100 && upc === "грамм") {
-		return;
-	}
-	if (updateQuantity < 1) {
-		return;
-	}
-	quantityELEM.innerHTML = `${updateQuantity} `;
-	updatePrice({manager, upc, updateQuantity, price});
-}
-
-
-const increaseHandler = (e) => {
-	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
-	const manager = e.currentTarget.parentNode.parentNode.parentNode
-	const decreaseQuantity = upc === "грамм" ? 50 : 1;
-	const quantityELEM = manager.querySelector('.quantity-manager .quantity span');
-	const startQuantity = + manager.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-	const updateQuantity = startQuantity + decreaseQuantity;
-	if (stockQuantity < updateQuantity) {
-		return;
-	}
-	quantityELEM.innerHTML = `${updateQuantity} `;
-	updatePrice({manager, upc, updateQuantity, price});
-}
-
-
-const buttonsDecrease = document.querySelectorAll('.quantity-manager .control .decrease');
-
-Array.from(buttonsDecrease).forEach(el => {
-el.addEventListener('click', decreaseHandler)
-})
-
-const buttonsIncrease = document.querySelectorAll('.quantity-manager .control .increase');
-
-Array.from(buttonsIncrease).forEach(el => {
-el.addEventListener('click', increaseHandler)
-})
-
-const buttonsAddToCart = document.querySelectorAll('button[data-add-to-cart="data-add-to-cart"]');
-
-Array.from(buttonsAddToCart).forEach(el => {
-el.addEventListener('click', addToCart)
-})
-
-</script>

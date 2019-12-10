@@ -1,0 +1,177 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      {% if informations %}
+      <div class="col-sm-3">
+        <h5>{{ text_information }}</h5>
+        <ul class="list-unstyled">
+         {% for information in informations %}
+          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="col-sm-3">
+        <h5>{{ text_service }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+          <li><a href="{{ return }}">{{ text_return }}</a></li>
+          <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_extra }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+          <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+          <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+          <li><a href="{{ special }}">{{ text_special }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_account }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ account }}">{{ text_account }}</a></li>
+          <li><a href="{{ order }}">{{ text_order }}</a></li>
+          <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+          <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p>{{ powered }}</p>
+  </div>
+</footer>
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script>
+
+const addToCart = (e) => {
+	const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
+	const productId = e.currentTarget.getAttribute('data-product-id');
+	let quantityForCart = +targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+	const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
+	upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
+	cart.add(productId, quantityForCart);
+}
+
+
+const updatePrice = ({manager, upc, updateQuantity, price , fromPageProduct}) => {
+		const priceELEM = manager.querySelector('.price');
+		const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
+		let onlyPrice = price.match(regExp)[0];
+		onlyPrice = parseFloat(onlyPrice);
+    let modifyQuantity;
+    let priceForAnimated
+		if (upc === 'грамм') {
+      modifyQuantity = (updateQuantity - 100) / 100 + 1; 
+			onlyPrice = + onlyPrice *  (updateQuantity - 100) / 100 + onlyPrice;
+      priceForAnimated = document.querySelector('.for-animated');
+		} else {
+      modifyQuantity = updateQuantity
+			onlyPrice = + onlyPrice * modifyQuantity;
+      priceForAnimated = priceELEM.parentNode;
+		} 
+    priceForAnimated.classList.add('animated', 'flipInX');
+    priceELEM.innerHTML = `${onlyPrice.toFixed(2)} руб.`;
+    setTimeout(()=>{
+    priceForAnimated.classList.remove('animated', 'flipInX');
+  }, 400);
+    if(fromPageProduct){
+      const targetInput = document.getElementById('input-quantity');
+      targetInput.value = modifyQuantity;
+      targetInput.dispatchEvent(new Event("change", {bubbles : true, cancelable : true}));
+    }
+}
+
+const getAttributes = (elem) => {
+	const stockQuantity = + elem.getAttribute('data-quantity');
+	const upc = elem.getAttribute('data-upc');
+	const price = elem.getAttribute('data-price');
+	return {
+		stockQuantity,
+		upc,
+		price
+	}
+}
+
+const decreaseHandler = (e) => {
+	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
+	let manager = e.currentTarget.parentNode.parentNode.parentNode;
+  let fromPageProduct = false;
+  if(manager.classList.contains('form-group')){
+    manager = document.querySelector('.price-product-page');
+    fromPageProduct = true;
+  }
+	const decreaseQuantity = upc === "грамм" ? 50 : 1;
+	const quantityELEM = manager.querySelector('.quantity span');
+	const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
+	const updateQuantity = startQuantity - decreaseQuantity;
+	if (updateQuantity < 100 && upc === "грамм") {
+		return;
+	}
+	if (updateQuantity < 1) {
+		return;
+	}
+    quantityELEM.parentNode.classList.add('animated', 'flipInX');
+	quantityELEM.innerHTML = `${updateQuantity} `;
+    setTimeout(()=>{
+    quantityELEM.parentNode.classList.remove('animated', 'flipInX');
+  }, 400);
+	updatePrice({manager, upc, updateQuantity, price, fromPageProduct});
+}
+
+
+const increaseHandler = (e) => {
+	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
+  let manager = e.currentTarget.parentNode.parentNode.parentNode;
+  let fromPageProduct = false;
+  if(manager.classList.contains('form-group')){
+    manager = document.querySelector('.price-product-page');
+    fromPageProduct = true; 
+  }
+	const decreaseQuantity = upc === "грамм" ? 50 : 1;
+	const quantityELEM = manager.querySelector('.quantity span');
+	const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
+	const updateQuantity = startQuantity + decreaseQuantity;
+	if (stockQuantity < updateQuantity) {
+		return;
+	}
+  quantityELEM.parentNode.classList.add('animated', 'flipInX');
+	quantityELEM.innerHTML = `${updateQuantity} `;
+  setTimeout(()=>{
+    quantityELEM.parentNode.classList.remove('animated', 'flipInX');
+  }, 400);
+
+	updatePrice({manager, upc, updateQuantity, price, fromPageProduct});
+ }
+
+
+const buttonsDecrease = document.querySelectorAll('.quantity-manager .control .decrease');
+
+Array.from(buttonsDecrease).forEach(el => {
+el.addEventListener('click', decreaseHandler)
+})
+
+const buttonsIncrease = document.querySelectorAll('.quantity-manager .control .increase');
+
+Array.from(buttonsIncrease).forEach(el => {
+el.addEventListener('click', increaseHandler)
+})
+
+const buttonsAddToCart = document.querySelectorAll('button[data-add-to-cart="data-add-to-cart"]');
+
+Array.from(buttonsAddToCart).forEach(el => {
+el.addEventListener('click', addToCart)
+})
+
+
+
+
+</script>
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+Please donate via PayPal to donate@opencart.com
+//-->
+</body></html>

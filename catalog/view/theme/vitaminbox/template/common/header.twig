@@ -26,10 +26,14 @@
 			<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
 		{% endfor %}
     <link href="catalog/view/theme/vitaminbox/stylesheet/stylesheet.css" rel="stylesheet">
+    <link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" rel="stylesheet">
+    <link href="catalog/view/theme/vitaminbox/stylesheet/mfp-zoom-in.css" rel="stylesheet">
 		{% for script in scripts %}
 			<script src="{{ script }}" type="text/javascript"></script>
 		{% endfor %}
+		<script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
 		<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+    
 		{% for link in links %}
 			<link href="{{ link.href }}" rel="{{ link.rel }}"/>
 		{% endfor %}
@@ -67,6 +71,7 @@
               <div class="collapse navbar-collapse navbar-ex1-collapse">
 						  {% if informations %}
 								<ul class="nav navbar-nav list-unstyled header-articles">
+                      <a href="{{ home }}"><p>ГЛАВНАЯ</p></a>
 									{% for information in informations %}
 											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
 									{% endfor %}
@@ -88,9 +93,17 @@
 		<script>
 
       const articlesButtons = document.querySelector('.header-articles');
+      Array.from(articlesButtons.children)[0].classList.add('active');
       Array.from(articlesButtons.children).forEach(it=>{
-        if(it.children[0].innerText === `{{heading_title}}`) it.classList.add('active');
+        if(it.children[0].innerText === `{{heading_title}}`){
+          it.classList.add('active');
+          Array.from(articlesButtons.children)[0].classList.remove('active');
+        }else{
+           
+        }
       });
+
+
 
 			const searchFront = () => {
 
@@ -122,13 +135,8 @@
       } 
       
       searchFront();
-
-
       });
 
-      const articlesButtonsHandler = (e) =>{
-        e.target.classList.add('active');
-      }
 
     const navToggleHandler = () => {
       const menuwrapper = document.querySelector('.collapse.navbar-collapse');
