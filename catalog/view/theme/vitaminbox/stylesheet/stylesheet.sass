@@ -238,6 +238,7 @@ header
 
 #content
   margin-bottom: 70px
+  user-select: none
 
 #common-home
   h3
@@ -273,7 +274,7 @@ header
       font-family: MyriadSetProSemiBold, sans-serif
       font-size: 18px
       p, span
-        font-size: 20px 
+        font-size: 18px 
       .price-manager
         width: 50%
         user-select: none
@@ -314,7 +315,7 @@ header
         .quantity
           margin-bottom: 10px
         .control
-          height: 32px
+          height: 28px
           width: 100%
           display: flex
           justify-content: space-around
@@ -398,6 +399,7 @@ header
       border-color: #fff
 .h1-product-page
   margin-top: 0
+  margin-bottom: 20px
 span.in-stock
   color: $accent2
   font-size: 18px
@@ -483,6 +485,8 @@ span.in-stock
 
 .nav-tabs
   border: none
+  user-select: none
+  margin: 10px 0px
   li
     display: flex
     a
@@ -513,6 +517,7 @@ span.in-stock
 .tab-content
   padding: 20px 0
   text-align: justify
+  user-select: none
   table.table-bordered
     border: none
     thead
@@ -529,5 +534,8 @@ span.in-stock
         &:first-child
           color: lighten($text, 20)
           font-size: 16px
+
+footer
+  background-color: $grey1
 
 @import "media"
