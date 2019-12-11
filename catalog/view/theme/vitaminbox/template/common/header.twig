@@ -72,6 +72,7 @@
 						  {% if informations %}
 								<ul class="nav navbar-nav list-unstyled header-articles">
                       <a href="{{ home }}"><p>ГЛАВНАЯ</p></a>
+                      <a href="ekzoticheskie-frukty/"><p>КАТАЛОГ</p></a>
 									{% for information in informations %}
 											<a href="{{ information.href }}"><p>{{ information.title }}</p></a>
 									{% endfor %}
@@ -92,15 +93,23 @@
 		{{ menu }}
 		<script>
 
+
       const articlesButtons = document.querySelector('.header-articles');
       Array.from(articlesButtons.children)[0].classList.add('active');
+      Array.from(articlesButtons.children)[1].classList.add('active');
       Array.from(articlesButtons.children).forEach(it=>{
         if(it.children[0].innerText === `{{heading_title}}`){
           it.classList.add('active');
           Array.from(articlesButtons.children)[0].classList.remove('active');
+          Array.from(articlesButtons.children)[1].classList.remove('active');
         }else{
-           
-        }
+					if(`{{title}}`.startsWith('ЭКЗО') === true){
+						Array.from(articlesButtons.children)[0].classList.add('active');
+						Array.from(articlesButtons.children)[1].classList.remove('active');
+					}else{
+						Array.from(articlesButtons.children)[0].classList.remove('active');
+					}
+				}
       });
 
 

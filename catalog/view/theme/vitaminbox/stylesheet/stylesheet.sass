@@ -128,21 +128,64 @@ header
 
 #cart
   transition: all .3s ease
+  .btn-lg
+    border-radius: 0px
   button
     border-radius: none
     transition: all .3s ease
     color: $text
   &:hover
     background-color: $accent2
-    button
+    button[data-toggle="dropdown"]
       background-color: $accent2
       color: #fff
   .dropdown-menu
     min-width: 100%
-    p
-      margin: 0
-      padding: 10px 0
-      font-size: 16px
+    padding: 0 10px
+    border-radius: 0
+    li
+      min-width: 100%
+      p.text-center
+        margin: 0px
+        padding: 10px 0
+        font-size: 16px
+      a
+        color: $accent
+        transition: all .3s ease
+        &:hover
+          color: $accent2
+      table
+        margin-top: 10px
+        width: 400px
+        font-size: 16px
+        color: $text
+        tbody
+          tr
+            td
+              vertical-align: middle
+          tr:nth-of-type(odd)
+            background-color: $grey1
+      a
+        strong
+          i
+            display: inline-block
+            margin-right: 5px
+        td
+          vertical-align: middle
+      button
+        i
+          display: block
+        width: 30px
+        border-color: $accent
+        &:hover
+          border-color: $accent2
+          background-color: $accent2
+          i
+            color: #fff
+#cart.open
+  button[data-toggle="dropdown"]
+    background-color: $accent2
+    color: #fff  
 
 
 .swiper-viewport
@@ -154,6 +197,8 @@ header
 .swiper-control
   display: flex
   justify-content: space-between
+  a:hover, a:focus
+    text-decoration: none
   .swiper-link
     width: 268px
     height: 68px
@@ -167,7 +212,14 @@ header
       margin: 0
     &:hover
       background-color: $accent2
-      cursor: pointer      
+      cursor: pointer   
+      text-decoration: none
+      a
+        text-decoration: none
+        &:hover
+          text-decoration: none
+        &:focus
+          text-decoration: none
   .swiper-pager
     position: relative
     width: 268px
@@ -338,6 +390,10 @@ header
     border: 1px #fff solid
     &:hover
       border: 1px $grey2 solid
+      .product-layout .caption-name.top-name
+        h4  
+          a
+            color: $accent2
   .caption.top-name
     display: block
     h4
