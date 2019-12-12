@@ -159,10 +159,14 @@ header
         width: 400px
         font-size: 16px
         color: $text
+        img
+          &:hover
+            transform: scale(1.1)
         tbody
           tr
             td
               vertical-align: middle
+              padding: 5px
           tr:nth-of-type(odd)
             background-color: $grey1
       a
@@ -176,12 +180,16 @@ header
         i
           display: block
         width: 30px
+        height: 30px
         border-color: $accent
         &:hover
           border-color: $accent2
           background-color: $accent2
           i
             color: #fff
+  .order-confirm
+    display: flex
+    justify-content: space-around
 #cart.open
   button[data-toggle="dropdown"]
     background-color: $accent2
