@@ -314,6 +314,28 @@ header
     margin-bottom: 35px
     position: relative
     transition: all .5s ease
+    .adding-to-cart
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      bottom: 0
+      background-color: rgba(203,202,204,0.1)      
+      z-index: 5
+      display: none
+      justify-content: center
+      align-items: center
+      p
+        color: $text
+        font-size: 36px
+        font-family: MyriadSetProSemiBold, sans-serif
+        text-align: center
+        user-select: none
+        line-height: 1.1  
+    .show-blur ~ *
+      filter: blur(7px)
+
+
     .image
       margin-bottom: 12px
     .manager
