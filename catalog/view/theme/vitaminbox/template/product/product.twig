@@ -69,7 +69,8 @@
         {% set class = 'col-sm-4' %}
         {% endif %}
         <div class="{{ class }}">
-
+				<div class="adding-to-cart">
+				</div>
          {% if thumb or images %}
           <ul class="thumbnails product-page-image">
             {% if thumb %}
@@ -346,7 +347,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-cart').on('click', function() {
+$('#button-cart').on('click', function(e) {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
 		type: 'post',
@@ -354,6 +355,11 @@ $('#button-cart').on('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-cart').button('loading');
+        const targetElem = e.currentTarget.parentNode.parentNode.parentNode.parentNode;
+        const name = targetElem.querySelector('a.thumbnail').getAttribute('title');
+        const elem = targetElem.querySelector('.adding-to-cart');
+        elem.innerHTML = `<p>${name} добавлен к корзину !</p>`;
+        $(elem).addClass('active').css('display','flex').hide().fadeIn();
 		},
 		complete: function() {
 			$('#button-cart').button('reset');
@@ -361,6 +367,11 @@ $('#button-cart').on('click', function() {
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
+
+        const elem = document.querySelector('.adding-to-cart');
+        setTimeout(() => {
+          $(elem).removeClass('active').css('display','none').fadeOut();
+        }, 700)
 
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -384,7 +395,7 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				{# $('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>'); #}
 
 				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 

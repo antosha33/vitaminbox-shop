@@ -148,7 +148,10 @@ var cart = {
       data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
       dataType: 'json',
       beforeSend: function () {
+        const name = elem.parentNode.querySelector('.caption.top-name h4 a').innerHTML;
+        elem.innerHTML = `<p>${name} добавлен к корзину !</p>`;
         $('#cart > button').button('loading');
+        $(elem).addClass('active').css('display','flex').hide().fadeIn();
       },
       complete: function () {
         $('#cart > button').button('reset');
@@ -157,23 +160,23 @@ var cart = {
       success: function (json) {
         $('.alert-dismissible, .text-danger').remove();
 
-        elem.style.display = 'none';
-        elem.classList.remove('show-blur');
-        const newP = document.createElement('p');
-        const name = elem.parentNode.querySelector('.caption');
-        console.log(name);
+        setTimeout(() => {
+          $(elem).removeClass('active').css('display','none').fadeOut();
+        }, 700)
 
+        
         if (json['redirect']) {
           location = json['redirect'];
         }
 
         if (json['success']) {
+          
           // $('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
           // Need to set timeout otherwise it wont update the total
-          // setTimeout(function () {
-          //   $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-          // }, 100);
+          setTimeout(function () {
+            $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+          }, 100);
 
           // $('html, body').animate({ scrollTop: 0 }, 'slow');
 

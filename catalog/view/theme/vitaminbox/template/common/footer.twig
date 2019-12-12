@@ -49,8 +49,6 @@
 
 const addToCart = (e) => {
   const targetThumb = e.currentTarget.parentNode.parentNode.parentNode.parentNode.children[0];
-  targetThumb.style.display = 'flex';
-  targetThumb.classList.add('show-blur');
 	const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
 	const productId = e.currentTarget.getAttribute('data-product-id');
 	let quantityForCart = +targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
