@@ -59,6 +59,7 @@ const addToCart = (e) => {
 
 
 const updatePrice = ({manager, upc, updateQuantity, price , fromPageProduct}) => {
+    console.log(manager);
 		const priceELEM = manager.querySelector('.price');
 		const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
 		let onlyPrice = price.match(regExp)[0];
@@ -68,7 +69,7 @@ const updatePrice = ({manager, upc, updateQuantity, price , fromPageProduct}) =>
 		if (upc === 'грамм') {
       modifyQuantity = (updateQuantity - 100) / 100 + 1; 
 			onlyPrice = + onlyPrice *  (updateQuantity - 100) / 100 + onlyPrice;
-      priceForAnimated = document.querySelector('.for-animated');
+      priceForAnimated = manager.querySelector('.for-animated');
 		} else {
       modifyQuantity = updateQuantity
 			onlyPrice = + onlyPrice * modifyQuantity;

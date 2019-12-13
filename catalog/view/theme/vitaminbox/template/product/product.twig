@@ -371,7 +371,7 @@ $('#button-cart').on('click', function(e) {
         const elem = document.querySelector('.adding-to-cart');
         setTimeout(() => {
           $(elem).removeClass('active').css('display','none').fadeOut();
-        }, 700)
+        }, 800)
 
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -399,7 +399,7 @@ $('#button-cart').on('click', function(e) {
 
 				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
+				{# $('html, body').animate({ scrollTop: 0 }, 'slow'); #}
 
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}

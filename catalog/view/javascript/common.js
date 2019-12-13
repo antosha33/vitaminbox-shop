@@ -162,7 +162,7 @@ var cart = {
 
         setTimeout(() => {
           $(elem).removeClass('active').css('display','none').fadeOut();
-        }, 700)
+        }, 800)
 
         
         if (json['redirect']) {
