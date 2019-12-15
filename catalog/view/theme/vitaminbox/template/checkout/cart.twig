@@ -40,7 +40,6 @@
               <tr>
                 <td class="text-center">{{ column_image }}</td>
                 <td class="text-left">{{ column_name }}</td>
-                <td class="text-left">{{ column_model }}</td>
                 <td class="text-left">{{ column_quantity }}</td>
                 <td class="text-right">{{ column_price }}</td>
                 <td class="text-right">{{ column_total }}</td>
@@ -60,18 +59,22 @@
                 <small>{{ product.reward }}</small> {% endif %}
                 {% if product.recurring %} <br />
                 <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
-              <td class="text-left">{{ product.model }}++{{ product.upc }}</td>
-              <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
+              <td class="text-left"><div class="input-group custom btn-block">
                   {% if product.upc == 'грамм' %} 
-                  <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity * 100 }}" size="1" class="form-control" />
+                   <div class="input-value">
+                   <span>{{ product.quantity * 100 }}</span><span>{{ product.upc}}</span>
+                    <input type="range" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity * 100}}" min="100" max="{{ product.stockQuantity}}" size="1" step="50" class="form-control-range" />
+                   </div>
                   <input type="hidden" name="upc[{{ product.cart_id }}]" value="{{ product.upc}}" size="1" class="form-control" />
-                  {% else %} 
-                  <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity}}" size="1" class="form-control" />
+                  {% else %}          
+                  <div class="input-value"><span>{{ product.quantity}}</span><span>{{ product.upc}}</span>
+                   <input type="range" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity}}" min="1" max="{{  product.stockQuantity}}" size="1" step="1" class="form-control-range" />
+                  </div>
                   <input type="hidden" name="upc[{{ product.cart_id }}]" value="{{ product.upc}}" size="1" class="form-control" />
                   {% endif %}
-                  <span class="input-group-btn">
+                  <span class="input-group-btn cart-edit-buttons">
                   <button type="submit" data-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times-circle"></i></button>
+                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times"></i></button>
                   </span></div></td>
               <td class="text-right">{{ product.price }}</td>
               <td class="text-right">{{ product.total }}</td>
@@ -122,4 +125,16 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
+<script>
+const inputs = document.querySelectorAll('input[type="range"]');
+
+const inputHandler = (e) => {
+  const value = e.currentTarget.value;
+  e.currentTarget.parentNode.firstElementChild.innerHTML = `<span>${value}</span>`;
+}
+
+Array.from(inputs).forEach( it => {
+  it.addEventListener('input', inputHandler);
+})
+</script>
 {{ footer }} 
