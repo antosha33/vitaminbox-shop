@@ -53,18 +53,3 @@
 location = '{{ redirect }}';
 //--></script> 
 {% endif %} 
-<script>
-
-  const paymentMethod =() =>{
-
-    const inputRadio = document.querySelector('input[name="begateway]"').getAttribute('checked');
-    console.log(inputRadio);
-    debugger;
-  }
-  
-  const confirmOrderButton = document.querySelector('#button-confirm');
-
-  confirmOrderButton.addEventListener('click', paymentMethod);
-
-
-</script>

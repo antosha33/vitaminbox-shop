@@ -12,9 +12,6 @@ class ControllerExtensionPaymentBeGateway extends Controller {
     $data['token_error'] = $this->language->get('token_error');
     $data['order_id'] = $this->session->data['order_id'];
 
-    echo '<pre>';
-    var_dump($data); 
-    exit;
     return $this->load->view('extension/payment/begateway', $data);
   }
 
@@ -33,7 +30,7 @@ class ControllerExtensionPaymentBeGateway extends Controller {
       'country' => strlen($order_info['payment_iso_code_2']) > 0 ? $order_info['payment_iso_code_2'] : null,
       'city'=> strlen($order_info['payment_city']) > 0 ? $order_info['payment_city'] : null,
       'phone' => strlen($order_info['telephone']) > 0 ? $order_info['telephone'] : null,
-      'email'=> strlen($order_info['email']) > 0 ? $order_info['email'] : null,
+      // 'email'=> strlen($order_info['email']) > 0 ? $order_info['email'] : null,
       'zip' => strlen($order_info['payment_postcode']) > 0 ? $order_info['payment_postcode'] : null,
       'ip' => $this->request->server['REMOTE_ADDR']
     );
@@ -159,6 +156,17 @@ class ControllerExtensionPaymentBeGateway extends Controller {
 
     $this->load->model('checkout/order');
     $order_info = $this->model_checkout_order->getOrder($order_id);
+
+    if ($order_info) {
+      $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
+
+      if(isset($status) && $status == 'successful'){
+        $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_begateway_completed_status_id'), "UID: $transaction_id. $three_d Processor message: $transaction_message", true);
+      }
+      if(isset($status) && ($status == 'failed')){
+        $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_begateway_failed_status_id'), "UID: $transaction_id. Fail reason: $transaction_message", true);
+      }
+    }
 
     $this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
   }
