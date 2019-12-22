@@ -1,153 +1,183 @@
+<script type="text/javascript" src="https://js.bepaid.by/begateway-1-latest.min.js"></script>
 <footer>
-  <div class="container">
-    <div class="row">
-      {% if informations %}
-      <div class="col-sm-3">
-        <h5>{{ text_information }}</h5>
-        <ul class="list-unstyled">
-         {% for information in informations %}
-          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-      <div class="col-sm-3">
-        <h5>{{ text_service }}</h5>
-        <ul class="list-unstyled">
-          <li><a href="{{ contact }}">{{ text_contact }}</a></li>
-          <li><a href="{{ return }}">{{ text_return }}</a></li>
-          <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-3">
-        <h5>{{ text_extra }}</h5>
-        <ul class="list-unstyled">
-          <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
-          <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
-          <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
-          <li><a href="{{ special }}">{{ text_special }}</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-3">
-        <h5>{{ text_account }}</h5>
-        <ul class="list-unstyled">
-          <li><a href="{{ account }}">{{ text_account }}</a></li>
-          <li><a href="{{ order }}">{{ text_order }}</a></li>
-          <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
-          <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
-        </ul>
-      </div>
-    </div>
-    <hr>
-    <p>{{ powered }}</p>
-  </div>
+	<div class="container">
+		<div class="row">
+			<div class="top-footer-info">
+				<div class="col-lg-3">
+					<a href="tel:+375297054242">
+						<i class="fa fa-phone-square" aria-hidden="true"></i>+375-29-705-42-42</a>
+				</div>
+				<div class="col-lg-6">Режим работы: с 9.00 до 21.00 без выходных</div>
+				<div class="col-lg-3">
+					<a href="http://instagram.com/vitaminbox.by">
+						<i class="fa fa-instagram" aria-hidden="true"></i>instagram</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			{% if informations %}
+				<div class="col-sm-3 col-lg-6 flex-mode">
+					<h5>{{ text_information }}</h5>
+					<ul class="list-unstyled">
+						{% for information in informations %}
+							<li>
+								<a href="{{ information.href }}">{{ information.title }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+			<div class="col-sm-3 col-lg-6 flex-mode">
+				<h5>{{ text_account }}</h5>
+				<ul class="list-unstyled">
+					<li>
+						<a href="{{ account }}">{{ text_account }}</a>
+					</li>
+					<li>
+						<a href="{{ order }}">{{ text_order }}</a>
+					</li>
+					<li>
+						<a href="{{ wishlist }}">{{ text_wishlist }}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="bottom-footer-info">
+				<div class="col-lg-7">
+					<div class="owner">Индивидуальный предприниматель Азаронок А. С. УНП 192797009 от 03.04.2017 <br> Регистрация в Торговом реестре Республики Беларусь №##### ##.##.#### г. </div>
+				</div>
+				<div class="col-lg-5">
+					<div class="about-payment"><img src="./../../../../../../image/payment/icons_cards_all.png"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </footer>
+
 {% for script in scripts %}
-<script src="{{ script }}" type="text/javascript"></script>
+	<script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
 <script>
 
-const addToCart = (e) => {
-  const targetThumb = e.currentTarget.parentNode.parentNode.parentNode.parentNode.children[0];
-	const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
-	const productId = e.currentTarget.getAttribute('data-product-id');
-	let quantityForCart = +targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-	const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
-	upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
-	cart.add(productId, quantityForCart, targetThumb);
+	const addToCart = (e) => {
+const targetThumb = e.currentTarget.parentNode.parentNode.parentNode.parentNode.children[0];
+const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
+const productId = e.currentTarget.getAttribute('data-product-id');
+let quantityForCart = + targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
+upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
+cart.add(productId, quantityForCart, targetThumb);
 }
 
 
-const updatePrice = ({manager, upc, updateQuantity, price , fromPageProduct}) => {
-    console.log(manager);
-		const priceELEM = manager.querySelector('.price');
-		const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
-		let onlyPrice = price.match(regExp)[0];
-		onlyPrice = parseFloat(onlyPrice);
-    let modifyQuantity;
-    let priceForAnimated
-		if (upc === 'грамм') {
-      modifyQuantity = (updateQuantity - 100) / 100 + 1; 
-			onlyPrice = + onlyPrice *  (updateQuantity - 100) / 100 + onlyPrice;
-      priceForAnimated = manager.querySelector('.for-animated');
-		} else {
-      modifyQuantity = updateQuantity
-			onlyPrice = + onlyPrice * modifyQuantity;
-      priceForAnimated = priceELEM.parentNode;
-		} 
-    priceForAnimated.classList.add('animated', 'flipInX');
-    priceELEM.innerHTML = `${onlyPrice.toFixed(2)} руб.`;
-    setTimeout(()=>{
-    priceForAnimated.classList.remove('animated', 'flipInX');
-  }, 400);
-    if(fromPageProduct){
-      const targetInput = document.getElementById('input-quantity');
-      targetInput.value = modifyQuantity;
-      targetInput.dispatchEvent(new Event("change", {bubbles : true, cancelable : true}));
-    }
+const updatePrice = ({
+manager,
+upc,
+updateQuantity,
+price,
+fromPageProduct
+}) => {
+const priceELEM = manager.querySelector('.price');
+const regExp = /(([0-9]+)\.([0-9])+)|([0-9]+)/;
+let onlyPrice = price.match(regExp)[0];
+onlyPrice = parseFloat(onlyPrice);
+let modifyQuantity;
+let priceForAnimated
+if (upc === 'грамм') {
+modifyQuantity = (updateQuantity - 100) / 100 + 1;
+onlyPrice = + onlyPrice * (updateQuantity - 100) / 100 + onlyPrice;
+priceForAnimated = manager.querySelector('.for-animated');
+} else {
+modifyQuantity = updateQuantity
+onlyPrice = + onlyPrice * modifyQuantity;
+priceForAnimated = priceELEM.parentNode;
+} priceForAnimated.classList.add('animated', 'flipInX');
+priceELEM.innerHTML = `${
+onlyPrice.toFixed(2)
+} руб.`;
+setTimeout(() => {
+priceForAnimated.classList.remove('animated', 'flipInX');
+}, 400);
+if (fromPageProduct) {
+const targetInput = document.getElementById('input-quantity');
+targetInput.value = modifyQuantity;
+targetInput.dispatchEvent(new Event("change", {
+bubbles: true,
+cancelable: true
+}));
+}
 }
 
 const getAttributes = (elem) => {
-	const stockQuantity = + elem.getAttribute('data-quantity');
-	const upc = elem.getAttribute('data-upc');
-	const price = elem.getAttribute('data-price');
-	return {
-		stockQuantity,
-		upc,
-		price
-	}
+const stockQuantity = + elem.getAttribute('data-quantity');
+const upc = elem.getAttribute('data-upc');
+const price = elem.getAttribute('data-price');
+return {stockQuantity, upc, price}
 }
 
 const decreaseHandler = (e) => {
-	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
-	let manager = e.currentTarget.parentNode.parentNode.parentNode;
-  let fromPageProduct = false;
-  if(manager.classList.contains('form-group')){
-    manager = document.querySelector('.price-product-page');
-    fromPageProduct = true;
-  }
-	const decreaseQuantity = upc === "грамм" ? 50 : 1;
-	const quantityELEM = manager.querySelector('.quantity span');
-	const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
-	const updateQuantity = startQuantity - decreaseQuantity;
-	if (updateQuantity < 100 && upc === "грамм") {
-		return;
-	}
-	if (updateQuantity < 1) {
-		return;
-	}
-    quantityELEM.parentNode.classList.add('animated', 'flipInX');
-	quantityELEM.innerHTML = `${updateQuantity} `;
-    setTimeout(()=>{
-    quantityELEM.parentNode.classList.remove('animated', 'flipInX');
-  }, 400);
-	updatePrice({manager, upc, updateQuantity, price, fromPageProduct});
+const {stockQuantity, upc, price} = getAttributes(e.currentTarget);
+let manager = e.currentTarget.parentNode.parentNode.parentNode;
+let fromPageProduct = false;
+if (manager.classList.contains('form-group')) {
+manager = document.querySelector('.price-product-page');
+fromPageProduct = true;
+}
+const decreaseQuantity = upc === "грамм" ? 50 : 1;
+const quantityELEM = manager.querySelector('.quantity span');
+const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
+const updateQuantity = startQuantity - decreaseQuantity;
+if (updateQuantity < 100 && upc === "грамм") {
+return;
+}
+if (updateQuantity < 1) {
+return;
+}
+quantityELEM.parentNode.classList.add('animated', 'flipInX');
+quantityELEM.innerHTML = `${updateQuantity} `;
+setTimeout(() => {
+quantityELEM.parentNode.classList.remove('animated', 'flipInX');
+}, 400);
+updatePrice({
+manager,
+upc,
+updateQuantity,
+price,
+fromPageProduct
+});
 }
 
 
 const increaseHandler = (e) => {
-	const { stockQuantity, upc, price } = getAttributes(e.currentTarget);
-  let manager = e.currentTarget.parentNode.parentNode.parentNode;
-  let fromPageProduct = false;
-  if(manager.classList.contains('form-group')){
-    manager = document.querySelector('.price-product-page');
-    fromPageProduct = true; 
-  }
-	const decreaseQuantity = upc === "грамм" ? 50 : 1;
-	const quantityELEM = manager.querySelector('.quantity span');
-	const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
-	const updateQuantity = startQuantity + decreaseQuantity;
-	if (stockQuantity < updateQuantity) {
-		return;
-	}
-  quantityELEM.parentNode.classList.add('animated', 'flipInX');
-	quantityELEM.innerHTML = `${updateQuantity} `;
-  setTimeout(()=>{
-    quantityELEM.parentNode.classList.remove('animated', 'flipInX');
-  }, 400);
+const {stockQuantity, upc, price} = getAttributes(e.currentTarget);
+let manager = e.currentTarget.parentNode.parentNode.parentNode;
+let fromPageProduct = false;
+if (manager.classList.contains('form-group')) {
+manager = document.querySelector('.price-product-page');
+fromPageProduct = true;
+}
+const decreaseQuantity = upc === "грамм" ? 50 : 1;
+const quantityELEM = manager.querySelector('.quantity span');
+const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
+const updateQuantity = startQuantity + decreaseQuantity;
+if (stockQuantity < updateQuantity) {
+return;
+}
+quantityELEM.parentNode.classList.add('animated', 'flipInX');
+quantityELEM.innerHTML = `${updateQuantity} `;
+setTimeout(() => {
+quantityELEM.parentNode.classList.remove('animated', 'flipInX');
+}, 400);
 
-	updatePrice({manager, upc, updateQuantity, price, fromPageProduct});
- }
+updatePrice({
+manager,
+upc,
+updateQuantity,
+price,
+fromPageProduct
+});
+}
 
 
 const buttonsDecrease = document.querySelectorAll('.quantity-manager .control .decrease');
@@ -167,13 +197,9 @@ const buttonsAddToCart = document.querySelectorAll('button[data-add-to-cart="dat
 Array.from(buttonsAddToCart).forEach(el => {
 el.addEventListener('click', addToCart)
 })
-
-
-
-
 </script>
+
 <!--
 OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com
-//-->
-</body></html>
+//--></body></html>
