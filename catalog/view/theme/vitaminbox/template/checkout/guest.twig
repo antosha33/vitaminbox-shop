@@ -500,8 +500,36 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 			} else {
 				html += '<option value="0" selected="selected">{{ text_none }}</option>';
 			}
-
+    const city = document.querySelector('input[name="city"]');
 			$('#collapse-payment-address select[name=\'zone_id\']').html(html);
+      if($("#input-payment-zone :selected").text() === "Минск"){
+        city.parentNode.style.display = 'none';
+      };
+    city.value = 'Минск';
+    const region = document.querySelector('select[name="zone_id"]');
+    const address_1 = document.querySelector('input[name="address_1"]');
+    address_1.value = '';
+    const notification = document.createElement('div');
+    notification.classList.add('delivery-notification');
+    notification.innerHTML = '<p>Забрать покупку вы можете по месту прибытия маршрутного такси в вашем городе !</p>'
+    const changeCityField = (e) => {
+      if(e.target.value != '337' ){
+        console.log('!');
+        city.parentNode.style.display = 'block';
+        city.value = '';
+        address_1.parentNode.style.display = 'none';
+        address_1.value = 'без адреса';
+        city.parentNode.after(notification);
+      }else{
+        address_1.parentNode.style.display = 'block';
+        address_1.value = '';
+        city.parentNode.style.display = 'none';
+        city.value = 'Минск';
+        notification.remove();
+      };
+    }
+    region.addEventListener('change', changeCityField);
+
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -510,4 +538,14 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 });
 
 $('#collapse-payment-address select[name=\'country_id\']').trigger('change');
+
+
+{# const zoneId = document.querySelector('select[name="zone_id"]'); #}
+   
+{# const city = document.querySelector('input[name="city"]'); #}
+ {# if(zoneId != null || zoneId != undefined ){
+
+   city.style.displaye= "none";
+ } #}
+
 //--></script> 
