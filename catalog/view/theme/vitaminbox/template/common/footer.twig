@@ -16,8 +16,8 @@
 		</div>
 		<div class="row">
 			{% if informations %}
-				<div class="col-sm-3 col-lg-6 flex-mode">
-					<h5>{{ text_information }}</h5>
+				<div class="col-sm-3 col-lg-12 flex-mode">
+					{# <h5>{{ text_information }}</h5> #}
 					<ul class="list-unstyled">
 						{% for information in informations %}
 							<li>
@@ -28,7 +28,7 @@
 					</ul>
 				</div>
 			{% endif %}
-			<div class="col-sm-3 col-lg-6 flex-mode">
+			{# <div class="col-sm-3 col-lg-6 flex-mode">
 				<h5>{{ text_account }}</h5>
 				<ul class="list-unstyled">
 					<li>
@@ -41,7 +41,7 @@
 						<a href="{{ wishlist }}">{{ text_wishlist }}</a>
 					</li>
 				</ul>
-			</div>
+			</div> #}
 		</div>
 		<div class="row">
 			<div class="bottom-footer-info">
@@ -125,11 +125,14 @@ if (manager.classList.contains('form-group')) {
 manager = document.querySelector('.price-product-page');
 fromPageProduct = true;
 }
-const decreaseQuantity = upc === "грамм" ? 50 : 1;
+const decreaseQuantity = upc === "грамм" ? 50 : upc === "кг." ? 0.5 : 1;
 const quantityELEM = manager.querySelector('.quantity span');
 const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
 const updateQuantity = startQuantity - decreaseQuantity;
 if (updateQuantity < 100 && upc === "грамм") {
+return;
+}
+if (updateQuantity < 1 && upc === "кг.") {
 return;
 }
 if (updateQuantity < 1) {
@@ -158,7 +161,7 @@ if (manager.classList.contains('form-group')) {
 manager = document.querySelector('.price-product-page');
 fromPageProduct = true;
 }
-const decreaseQuantity = upc === "грамм" ? 50 : 1;
+const decreaseQuantity = upc === "грамм" ? 50 : upc === "кг." ? 0.5 : 1;
 const quantityELEM = manager.querySelector('.quantity span');
 const startQuantity = + manager.querySelector('.quantity span').innerHTML.trim();
 const updateQuantity = startQuantity + decreaseQuantity;

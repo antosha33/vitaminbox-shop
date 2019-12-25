@@ -62,12 +62,19 @@
               <td class="text-left"><div class="input-group custom btn-block">
                   {% if product.upc == 'грамм' %} 
                    <div class="input-value">
-                   <span>{{ product.quantity * 100 }}</span><span>{{ product.upc}}</span>
+                   <span>{{ product.quantity * 100 }}</span><span>&nbsp{{ product.upc}}</span>
                     <input type="range" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity * 100}}" min="100" max="{{ product.stockQuantity}}" size="1" step="50" class="form-control-range" />
                    </div>
+                  <input type="hidden" name="upc[{{ product.cart_id }}]" value="{{ product.upc}}" size="1" class="form-control" />             
+                  {% elseif product.upc == 'кг.' %} 
+                  <div class="input-value">
+                   <span>{{ product.quantity * 1 }}</span><span>&nbsp{{ product.upc}}</span>
+                    <input type="range" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity}}" min="1" max="{{ product.stockQuantity}}" size="1" step="0.5" class="form-control-range" />
+                   </div>
                   <input type="hidden" name="upc[{{ product.cart_id }}]" value="{{ product.upc}}" size="1" class="form-control" />
+                  
                   {% else %}          
-                  <div class="input-value"><span>{{ product.quantity}}</span><span>{{ product.upc}}</span>
+                  <div class="input-value"><span>{{ product.quantity}}</span><span>&nbsp{{ product.upc}}</span>
                    <input type="range" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity}}" min="1" max="{{  product.stockQuantity}}" size="1" step="1" class="form-control-range" />
                   </div>
                   <input type="hidden" name="upc[{{ product.cart_id }}]" value="{{ product.upc}}" size="1" class="form-control" />

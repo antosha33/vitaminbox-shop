@@ -62,7 +62,15 @@ class ControllerCheckoutShippingMethod extends Controller {
 		} else {
 			$data['comment'] = '';
 		}
-		
+    
+
+    if(sizeof($data['shipping_methods']) == 2){
+      $data['shipping_methods']['flat'] = [];
+    }
+//     echo '<pre>';
+//  var_dump($data); 
+// exit;
+
 		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 

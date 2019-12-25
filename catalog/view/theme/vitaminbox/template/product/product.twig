@@ -30,17 +30,15 @@
             {% endif %}
             <li><span class="in-stock">{{ stock }}</span></li>
           </ul>
-
-
           <ul class="nav nav-tabs">
+                       <li class="active"><a href="#tab-description" data-toggle="tab"><i class="fa fa-circle animated fadeIn" aria-hidden="true"></i>{{ tab_description }}</a></li>
             {% if attribute_groups %}
-            <li class="active animated flipInX"><a href="#tab-specification" data-toggle="tab"><i class="fa fa-circle animated fadeIn" aria-hidden="true"></i>{{ tab_attribute }}</a></li>
-            {% endif %}
-            <li class=""><a href="#tab-description" data-toggle="tab"><i class="fa fa-circle animated fadeIn" aria-hidden="true"></i>{{ tab_description }}</a></li>
+           <li class="animated flipInX"><a href="#tab-specification" data-toggle="tab"><i class="fa fa-circle animated fadeIn" aria-hidden="true"></i>{{ tab_attribute }}</a></li>
+            {% endif %}         
           </ul>
           <div class="tab-content">
             {% if attribute_groups %}
-            <div class="tab-pane active animated fadeIn" id="tab-specification">
+            <div class="tab-pane  animated fadeIn" id="tab-specification">
               <table class="table table-bordered">
                 {% for attribute_group in attribute_groups %}
                 <thead>
@@ -60,7 +58,7 @@
               </table>
             </div>
             {% endif %}
-            <div class="tab-pane animated fadeIn" id="tab-description">{{ description }}</div>
+            <div class="tab-pane active animated fadeIn" id="tab-description">{{ description }}</div>
 
           </div>
         </div>

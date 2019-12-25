@@ -145,7 +145,6 @@
           <thead>
             <tr>
               <td class="text-left">{{ column_product }}</td>
-              <td class="text-left">{{ column_model }}</td>
               <td class="text-right">{{ column_quantity }}</td>
               <td class="text-right">{{ column_price }}</td>
               <td class="text-right">{{ column_total }}</td>
@@ -154,17 +153,31 @@
           <tbody>
           
           {% for product in products %}
+           {% if product.upc == 'грамм' %}
           <tr>
             <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
               {% if option.type != 'file' %}
               &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% else %}
               &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
               {% endfor %}</td>
-            <td class="text-left">{{ product.model }}</td>
             <td class="text-right">{{ product.quantity }}</td>
-            <td class="text-right">{{ product.price }}</td>
+            <td class="text-right">{{ product.price }}/100{{ product.upc }}</td>
+
             <td class="text-right">{{ product.total }}</td>
           </tr>
+          {% else %}
+                    <tr>
+            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+              {% if option.type != 'file' %}
+              &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% else %}
+              &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
+              {% endfor %}</td>
+            <td class="text-right">{{ product.quantity }}</td>
+            <td class="text-right">{{ product.price }}/{{ product.upc }}</td>
+
+            <td class="text-right">{{ product.total }}</td>
+          </tr>
+          {% endif %}
           {% endfor %}
           {% for voucher in vouchers %}
           <tr>
@@ -177,7 +190,7 @@
           {% endfor %}
           {% for total in totals %}
           <tr>
-            <td colspan="4" class="text-right">{{ total.title }}</td>
+            <td colspan="3" class="text-right">{{ total.title }}</td>
             <td class="text-right">{{ total.text }}</td>
           </tr>
           {% endfor %}
