@@ -17,10 +17,10 @@
       <h2>{{ heading_title }}</h2>
       <label class="control-label" for="input-search">{{ entry_search }}</label>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control" />
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <select name="category_id" class="form-control">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
@@ -45,15 +45,6 @@
             {% endfor %}
             {% endfor %}
           </select>
-        </div>
-        <div class="col-sm-3">
-          <label class="checkbox-inline">
-            {% if sub_category %}
-            <input type="checkbox" name="sub_category" value="1" checked="checked" />
-            {% else %}
-            <input type="checkbox" name="sub_category" value="1" />
-            {% endif %}
-            {{ text_sub_category }}</label>
         </div>
       </div>
       <p>
@@ -105,7 +96,7 @@
 						<div class="button-group">
 							<button type="button" data-add-to-cart="data-add-to-cart" data-product-id="{{product.product_id}}">
 								<i class="fa fa-shopping-cart"></i>
-								<span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span>
+								<span class="">{{ button_cart }}</span>
 							</button>
 							<button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');">
 								<i class="fa fa-heart"></i>

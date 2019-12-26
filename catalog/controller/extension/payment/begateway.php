@@ -123,6 +123,8 @@ class ControllerExtensionPaymentBeGateway extends Controller {
 
     $token = json_decode($response,true);
 
+    
+
     if ($token == NULL) {
       $this->log->write("Payment token response parse error: $response");
       return false;
@@ -154,6 +156,7 @@ class ControllerExtensionPaymentBeGateway extends Controller {
       $order_id = 0;
     }
 
+    
     $this->load->model('checkout/order');
     $order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -167,6 +170,8 @@ class ControllerExtensionPaymentBeGateway extends Controller {
         $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_begateway_failed_status_id'), "UID: $transaction_id. Fail reason: $transaction_message", true);
       }
     }
+
+
 
     $this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
   }

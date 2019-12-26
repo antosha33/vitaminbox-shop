@@ -52,7 +52,7 @@ gulp.task('deploy', function() {
 // Наблюдение за файлами
 
 gulp.task('watch', function() {
-	gulp.watch('catalog/view/theme/vitaminbox/stylesheet/stylesheet.sass', gulp.parallel('sass'));
+	gulp.watch('catalog/view/theme/vitaminbox/stylesheet/*.sass', gulp.parallel('sass'));
 	gulp.watch('catalog/view/theme/vitaminbox/template/**/*.twig', reload);
 	gulp.watch('catalog/view/theme/vitaminbox/js/**/*.js', reload);
 	gulp.watch('catalog/view/theme/vitaminbox/libs/**/*', reload);

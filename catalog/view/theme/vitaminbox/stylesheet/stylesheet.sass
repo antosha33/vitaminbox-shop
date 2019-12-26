@@ -492,6 +492,8 @@ header
   &.active ~ *
     opacity: 0.3
     transform: scale(0.7)
+    -webkit-filter: sepia(0.8)
+    filter: sepia(0.8)
 
 
 .product-page-image
@@ -630,6 +632,12 @@ span.in-stock
   padding: 10px 0
   text-align: justify
   user-select: none
+  .tab-pane
+    span
+      font-size: 16px!important
+      font-family: MyriadSetProText,sans-serif!important
+      color: #515050!important
+      text-align: justify!important
   table.table-bordered
     border: none
     thead
@@ -666,6 +674,7 @@ span.in-stock
         font-family: MyriadSetProText, sans-serif !important
         color: $text !important
         text-align: justify !important
+
 
 .input-group.custom
   display: flex

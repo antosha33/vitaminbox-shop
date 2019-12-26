@@ -31,7 +31,7 @@ $_['column_image']             = 'Изображение';
 $_['column_name']              = 'Название';
 $_['column_model']             = 'Модель';
 $_['column_quantity']          = 'Количество';
-$_['column_price']             = 'Цена за шт.';
+$_['column_price']             = 'Цена';
 $_['column_total']             = 'Всего';
 
 // Error
