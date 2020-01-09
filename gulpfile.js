@@ -36,9 +36,9 @@ function reload(done){
 // Выгрузка изменений на хостинг
 gulp.task('deploy', function() {
 	var conn = ftp.create({
-		host:      'hostname.com',
-		user:      'username',
-		password:  'userpassword',
+		host:      '93.125.99.124',
+		user:      'vitaminlp@vitaminb.vh112.hosterby.com',
+		password:  'vitaminbox1122',
 		parallel:  10,
 		log: gutil.log
 	});
@@ -46,7 +46,7 @@ gulp.task('deploy', function() {
 	'catalog/view/theme/vitaminbox/**'
 	];
 	return gulp.src(globs, {buffer: false})
-	.pipe(conn.dest('/path/to/folder/on/server'));
+	.pipe(conn.dest('/shop/catalog/view/theme/vitaminbox/'));
 });
 
 // Наблюдение за файлами
