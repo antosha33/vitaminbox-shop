@@ -15,7 +15,16 @@ class ControllerCommonColumnLeft extends Controller {
 				'href'     => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
 				'children' => array()
 			);
-			
+      
+      $data['menus'][] = array(
+				'id'       => 'menu-price-upload',
+				'icon'	   => 'fa-upload',
+				'name'	   => 'Загрузить прайс',
+				'href'     => $this->url->link('common/priceupload', 'user_token=' . $this->session->data['user_token'], true),
+				'children' => array()
+			);
+
+
 			// Catalog
 			$catalog = array();
 			
