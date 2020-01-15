@@ -1,6 +1,8 @@
 {{ header }}
 <div id="information-business" class="container">
 				<form id="form_2" class="input_form_1">
+        <div class="preloader_2"><div class="pulsar"></div></div>
+        <div class="success"><span>Запрос успешно обработан</span></div>
 					<div class="box box1">
 						<label>
 							<input type="text" name="user_name" placeholder="Введите Ваше имя" required>
@@ -11,26 +13,36 @@
 							<input type="text" name="user_email" placeholder="Введите Ваш E-mail" required>
 						</label>
 					</div>
+          	<div class="box box3">
+						<label>
+							<input type="text" name="user_phone" placeholder="Введите Ваш телефон" required>
+						</label>
+					</div>
 					<button class="buttons com_offer1">Коммерческое предложение</button>
 				</form>
 </div>
 {{ footer }}
 <script>
     $("form#form_2").submit(function() { //Change
-      console.log('!!!');
         var th = $(this);
         $('.preloader_2').css("display","block");
+        $('#form_2  .success').addClass('active')
+        $.ajax({
+            type: "POST",
+            url: "phpmailer/mail.php", //Change
+            data: th.serialize()
+        }).done(function() {
+            $('.preloader_2').css("display","none");
+            $('#form_2  .success').css('display','block').hide().fadeIn();
+            setTimeout(function() {
+                $('#form_2 .success').removeClass('active').fadeOut();
+                th.trigger("reset");
+            }, 2000);
+        });
         $.ajax({
             type: "POST",
             url: "phpmailer/mail2.php", //Change
             data: th.serialize()
-        }).done(function() {
-            $('.preloader_2').css("display","none");
-            $('.main-form_wrap .success').addClass('active').css('display','flex').hide().fadeIn();
-            setTimeout(function() {
-                $('.main-form_wrap .success').removeClass('active').fadeOut();
-                th.trigger("reset");
-            }, 2000);
         });
         return false;
     });

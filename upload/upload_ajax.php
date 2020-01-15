@@ -3,12 +3,13 @@
 $file = @$_FILES['file'];
 $error = $success = '';
  
+
 // Разрешенные расширения файлов.
 $allow = array('pdf');
  
 // Директория, куда будут загружаться файлы.
-$path = $_SERVER["DOCUMENT_ROOT"] . '/upload/';
- 
+$path = $_SERVER["DOCUMENT_ROOT"] . '/shop/upload/';
+
 if (!empty($file)) {
   // Проверим на ошибки загрузки.
 	if (!empty($file['error']) || empty($file['tmp_name'])) {
@@ -27,7 +28,8 @@ if (!empty($file)) {
 			default: $error = 'Файл не был загружен - неизвестная ошибка.'; break;
 		}
 	} elseif ($file['tmp_name'] == 'none' || !is_uploaded_file($file['tmp_name'])) {
-		$error = 'Не удалось загрузить файл.';
+
+    $error = 'Не удалось загрузить файл.';
 	} else {
 		// Оставляем в имени файла только буквы, цифры и некоторые символы.
 		$pattern = "[^a-zа-яё0-9,~!@#%^-_\$\?\(\)\{\}\[\]\.]";
@@ -36,7 +38,7 @@ if (!empty($file)) {
  
 		$parts = pathinfo($name);
 		if (empty($name) || empty($parts['extension'])) {
-			$error = 'Не удалось загрузить файл.';
+      $error = 'Не удалось загрузить файл.';
 		} elseif (!empty($allow) && !in_array(strtolower($parts['extension']), $allow)) {
       $error = 'Недопустимый тип файла';
       
@@ -44,7 +46,8 @@ if (!empty($file)) {
       $error = 'Имя файла должно быть price.pdf';
     }
     else {
-			// Перемещаем файл в директорию.
+      // Перемещаем файл в директорию.
+      
 			if (move_uploaded_file($file['tmp_name'], $path . $name)) {
 				// Далее можно сохранить название файла в БД и т.п.
 				$success = 'Файл «' . $name . '» успешно загружен.';

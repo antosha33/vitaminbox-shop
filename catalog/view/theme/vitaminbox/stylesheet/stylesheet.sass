@@ -843,4 +843,78 @@ footer
     margin: 10px 0px
     margin-bottom: 15px
 
+#form_2
+  position: relative 
+
+.preloader_2
+	display: none
+	top: 0
+	left: 0
+	bottom: 0
+	right: 0
+	position: absolute
+	z-index: 50
+
+.preloader_2
+  background-color: rgba(255,255,255,0.8)
+
+.pulsar
+  left: 50%
+  position: relative
+  margin-left: -40px
+  margin-top: -40px
+  top: 50%
+  display: block
+  &::before
+    content: ""
+    width: 80px
+    height: 80px
+    border-radius: 80px
+    position: absolute
+    border: 5px solid $accent
+    animation: pulse-outer 1.2s ease-in infinite
+  &::after
+    content: ''
+    width: 80px
+    height: 80px
+    border-radius: 80px
+    position: absolute
+    border: 5px solid $accent2
+    animation: pulse-inner 1.2s linear infinite
+
+@mixin opacity($opacity)
+	opacity: $opacity / 100
+	filter: alpha(opacity=$opacity)
+
+@keyframes pulse-outer
+	0%
+		@include opacity(100)
+	50%
+		@include opacity(50)
+	100%
+		@include opacity(0)
+@keyframes pulse-inner
+	0%
+		@include opacity(0)
+		transform: scale(0)
+	100%
+		@include opacity(100)
+		transform: scale(1)
+
+#form_2  
+  .success  
+    display: none
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    span
+      display: flex
+      font-family: MyriadSetProSemiBold, sans-serif
+      font-size: 32px
+      justify-content: center
+  .active ~ *
+    filter: blur(3px)
+
 @import "media"

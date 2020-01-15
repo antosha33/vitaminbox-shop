@@ -37,11 +37,15 @@ $('#js-file').change(function() {
 
 	$.ajax({
 		type: 'POST',
-		url: '/upload/upload_ajax.php',
+		url: 'shop/upload/upload_ajax.php',
     cache: false,
     contentType: false,
     processData: false,
     data: form_data,
+    beforeSend: function() {
+					$('#js-form').prop('disabled', true);
+					  $('#js-form').attr('class', 'fa fa-circle-o-notch fa-spin');
+				},
 		success: function(message) {
 			// После загрузки файла очистим форму.
       alert(message);
