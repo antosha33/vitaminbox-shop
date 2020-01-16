@@ -115,9 +115,9 @@ class Mail {
      *
      */
 	public function send() {
-		// if (!$this->to) {
-		// 	throw new \Exception('Error: E-Mail to required!');
-		// }
+		if (!$this->to) {
+			throw new \Exception('Error: E-Mail to required!');
+		}
 
 		if (!$this->from) {
 			throw new \Exception('Error: E-Mail from required!');
@@ -139,6 +139,6 @@ class Mail {
 			$this->adaptor->$key = $value;
 		}
 		
-		// $this->adaptor->send();
+		$this->adaptor->send();
 	}
 }
