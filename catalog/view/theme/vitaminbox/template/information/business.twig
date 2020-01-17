@@ -40,9 +40,10 @@
                         </label>
 					</div>
           	<div class="box box3">
-						<label>
-							<input type="text" name="user_phone" placeholder="Номер телефона" required pattern="\+375[1-9]{2}[0-9]{7}">
+						<label class="phone-code-label">
+							<input type="text" name="user_phone" placeholder="Номер телефона" required pattern="(17|44|33|29|25){1}[0-9]{7}">
 						    <span class="focus-border"><i></i></span>
+                            <span class="phone-code">+375<span>
                         </label>
 					</div>
 					<button class="buttons com_offer1">Запросить прайс-лист</button>
