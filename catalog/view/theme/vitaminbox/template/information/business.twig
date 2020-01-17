@@ -1,7 +1,16 @@
 {{ header }}
 <div id="information-business" class="container">
-        <div class="about-us">
-        <p>Витаминбокс</p>
+{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div class="content col-sm-9">
+      <div class="about-us">
+        <p><span>ВИТАМИНБОКС<span></p>
         <p> - это команда молодых профессионалов,
  которые любят фрукты и овощи,
 а главное знают как их выбрать.
@@ -10,28 +19,37 @@
 и Таиландом.
 И если у нас чего-то нету, знаем,
 где найти отличный продукт!
-</p></div>
+</p>
+<p>Для получения прайс-листа заполните форму.</p>
+</div>
 				<form id="form_2" class="input_form_1">
         <div class="preloader_2"><div class="pulsar"></div></div>
         <div class="success"><span>Запрос успешно обработан</span></div>
 					<div class="box box1">
 						<label>
-							<input type="text" name="user_name" placeholder="Введите Ваше имя" required>
+							<input type="text" name="user_name" placeholder="Название организации" required pattern="\D{2,}">
+                            <span class="focus-border">
+                            <i></i>
+                            </span>
 						</label>
 					</div>
 					<div class="box box2">
 						<label>
-							<input type="text" name="user_email" placeholder="Введите Ваш E-mail" required>
-						</label>
+							<input type="text" name="user_email" placeholder="E-mail" required pattern="\S+@[a-z]+.[a-z]+">
+						    <span class="focus-border"><i></i></span>
+                        </label>
 					</div>
           	<div class="box box3">
 						<label>
-							<input type="text" name="user_phone" placeholder="Введите Ваш телефон" required>
-						</label>
+							<input type="text" name="user_phone" placeholder="Номер телефона" required pattern="\+375[1-9]{2}[0-9]{7}">
+						    <span class="focus-border"><i></i></span>
+                        </label>
 					</div>
-					<button class="buttons com_offer1">Коммерческое предложение</button>
+					<button class="buttons com_offer1">Запросить прайс-лист</button>
 				</form>
 </div>
+    </div>
+      
 {{ footer }}
 <script>
     $("form#form_2").submit(function() { //Change
@@ -44,7 +62,7 @@
             data: th.serialize()
         }).done(function() {
             $('.preloader_2').css("display","none");
-            $('#form_2  .success').css('display','block').hide().fadeIn();
+            $('#form_2  .success').css('display','flex').hide().fadeIn();
             setTimeout(function() {
                 $('#form_2 .success').removeClass('active').fadeOut();
                 th.trigger("reset");

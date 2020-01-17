@@ -320,7 +320,7 @@ header
     padding: 12px
     margin-bottom: 35px
     position: relative
-    transition: all .5s ease
+    transition: all .3s ease
     .image
       margin-bottom: 12px
     .manager
@@ -404,7 +404,7 @@ header
               cursor: pointer
     border: 1px #fff solid
     &:hover
-      border: 1px $grey2 solid
+      box-shadow: 0 0 10px 
       .product-layout .caption-name.top-name
         h4  
           a
@@ -902,20 +902,128 @@ footer
 		transform: scale(1)
 
 #form_2  
+  margin-bottom: 25px
+  padding: 0px 45px
   .success  
     display: none
+    justify-content: center
+    align-items: center
     position: absolute
     top: 0
     right: 0
     bottom: 0
     left: 0
-    span
-      display: flex
-      font-family: MyriadSetProSemiBold, sans-serif
-      font-size: 32px
-      justify-content: center
+    z-index: 10
+  label
+    display: block
+  span
+    font-family: MyriadSetProSemiBold, sans-serif
+    justify-content: center
   .active ~ *
     filter: blur(3px)
+  .box
+    label
+      position: relative
+      margin-bottom: 8px
+      input
+        padding: 2px 15px
+        width: 100%
+        font-family: MyriadSetProThin, sans-serif
+        &:focus
+          // border-color: $accent
+          outline-color: transparent
+  button
+    width: 100%
+    background-color: $grey1
+    color: $text
+    border: 2px $grey2 solid
+    transition: all .3s ease
+    font-size: 18px
+    font-family: MyriadSetProSemiBold, sans-serif
+    &:hover
+      background-color: $text
+      color: #fff
+    &:focus
+      border-color: $text
+      outline: none
+
+
+input
+  border: 1px solid #ccc
+  padding: 7px 14px 9px
+  transition: 0.4s
+
+
+input
+  ~ .focus-border
+    &:before
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      width: 0
+      height: 2px
+      background-color: $accent2
+      transition: 0.3s
+
+    &:after
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      width: 0
+      height: 2px
+      background-color: $accent2
+      transition: 0.3s
+      top: auto
+      bottom: 0
+      left: auto
+      right: 0
+
+    i
+      &:before
+        content: ""
+        position: absolute
+        top: 0
+        left: 0
+        width: 2px
+        height: 0
+        background-color: $accent2
+        transition: 0.4s
+
+      &:after
+        content: ""
+        position: absolute
+        top: 0
+        left: 0
+        width: 2px
+        height: 0
+        background-color: $accent2
+        transition: 0.4s
+        left: auto
+        right: 0
+        top: auto
+        bottom: 0
+
+  &:focus ~ .focus-border
+    &:before, &:after
+      width: 100%
+      transition: 0.3s
+
+    i
+      &:before, &:after
+        height: 100%
+        transition: 0.4s
+
+@-webkit-keyframes autofill
+  to
+    color: inherit
+    background: transparent
+
+input:-webkit-autofill
+  -webkit-animation-name: autofill
+  -webkit-animation-fill-mode: both
+
 
 #information-business
   .about-us
@@ -923,6 +1031,13 @@ footer
       font-family: MyriadSetProText, sans-serif
       margin: 0px
       padding: 0px 40px
-      font-size: 26px
+      font-size: 18px
+      text-align: justify
+      margin-bottom: 15px
+    span
+      text-align: center
+      width: 100%
+      display: block
+      font-size: 22px 
 
 @import "media"
