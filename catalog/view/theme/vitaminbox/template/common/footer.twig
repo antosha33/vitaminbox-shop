@@ -62,13 +62,14 @@
 <script>
 
 	const addToCart = (e) => {
-const targetThumb = e.currentTarget.parentNode.parentNode.parentNode.parentNode.children[0];
-const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
-const productId = e.currentTarget.getAttribute('data-product-id');
-let quantityForCart = + targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
-const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
-upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
-cart.add(productId, quantityForCart, targetThumb);
+  const targetThumb = e.currentTarget.parentNode.parentNode.parentNode.parentNode.children[0];
+  const targetElement = e.currentTarget.parentNode.parentNode.nextElementSibling;
+  const productId = e.currentTarget.getAttribute('data-product-id');
+  let quantityForCart = + targetElement.querySelector('.quantity-manager .quantity span').innerHTML.trim();
+  const upc = targetElement.querySelector('.quantity-manager .quantity span').nextElementSibling.innerHTML;
+  upc === 'грамм' ? quantityForCart = quantityForCart / 100 : quantityForCart;
+  cart.add(productId, quantityForCart, targetThumb);
+  
 }
 
 

@@ -1,5 +1,6 @@
 <div id="cart" class="btn-group btn-block">
-  <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
+  
+  <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i><div class="cart-name">Корзина</div> <span id="cart-total">{{ text_items }}</span></button>
   <ul class="dropdown-menu pull-right">
     {% if products or vouchers %}
     <li>
@@ -49,10 +50,4 @@
     {% endif %}
   </ul>
 </div>
-<script>
-if(screen.width<=768){
-  const elem = document.querySelector('#cart-total');
-  const text = `{{text_items}}`.substr(7);
-  elem.innerHTML = text;
-}
-</script>
+

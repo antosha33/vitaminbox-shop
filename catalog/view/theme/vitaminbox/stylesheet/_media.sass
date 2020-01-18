@@ -15,7 +15,7 @@
     margin-top: 5px
   .header-articles
     a
-      font-size: 14px
+      font-size: 12px
   .cart-search
     justify-content: center
   #cart
@@ -36,6 +36,9 @@
         font-size: 26px
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px)
+  #cart
+    .cart-name
+      display: none
   .header-articles
     width: auto
     a
@@ -130,7 +133,7 @@
     background-color: #fff
     margin-bottom: 50px
     width: 100%
-  #product-product, #product-category, #common-home, #information-information, #product-search, #checkout-cart, #checkout-checkout
+  #product-product, #product-category, #common-home, #information-information, #product-search, #checkout-cart, #checkout-checkout, #information-business
     margin-top: 70px
   footer
     margin-top: 10px
@@ -140,6 +143,11 @@
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px)
+  #cart
+    #cart-total
+      font-size: 18px
+    i
+      font-size: 18px
   .navbar
     .navbar-header
       .navbar-toggle

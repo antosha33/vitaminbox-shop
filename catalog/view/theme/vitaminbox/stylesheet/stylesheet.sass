@@ -129,12 +129,17 @@ header
 
 #cart
   transition: all .3s ease
+  display: flex
+  .cart-name
+    display: inline-block
+    padding: 16px 0px
   .btn-lg
     border-radius: 0px
   button
     border-radius: none
     transition: all .3s ease
     color: $text
+    padding: 0 10px
   &:hover
     background-color: $accent2
     button[data-toggle="dropdown"]
@@ -903,7 +908,7 @@ footer
 
 #form_2  
   margin-bottom: 25px
-  padding: 0px 45px
+  padding: 0px 15px
   .success  
     display: none
     justify-content: center
@@ -1086,7 +1091,7 @@ input
     p
       font-family: MyriadSetProText, sans-serif
       margin: 0px
-      padding: 0px 40px
+      padding: 0px 10px
       font-size: 18px
       text-align: justify
       margin-bottom: 15px
@@ -1141,5 +1146,10 @@ input[type="range"]
     border: none
     box-shadow: none
 
+input[type="text"]:focus
+  outline: none
+
+.form-control  
+  border-radius: 0
 
 @import "media"
