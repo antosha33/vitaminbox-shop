@@ -126,7 +126,7 @@
 
 
 
-          <div id="product"> {% if options %}
+      <div id="product"> {% if options %}
             <hr>
             <h3>{{ text_option }}</h3>
             {% for option in options %}
@@ -269,7 +269,7 @@
          </div>
       </div>
       {% if products %}
-      <h3>{{ text_related }}</h3>
+      <h3>Рекомендуемые</h3>
       <div class="row"> {% set i = 0 %}
         {% for product in products %}
         {% if column_left and column_right %}
@@ -279,29 +279,81 @@
         {% else %}
         {% set class = 'col-xs-6 col-sm-3' %}
         {% endif %}
-        <div class="{{ class }}">
-          <div class="product-thumb transition">
-            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
-            <div class="caption">
-              <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-              <p>{{ product.description }}</p>
-              {% if product.rating %}
-              <div class="rating"> {% for j in 1..5 %}
-                {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
-                {% endfor %} </div>
-              {% endif %}
-              {% if product.price %}
-              <p class="price"> {% if not product.special %}
-                {{ product.price }}
-                {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
-                {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
-              {% endif %} </div>
-            <div class="button-group">
-              <button type="button" data-add-to-cart-from-producat-page="data-add-to-cart-from-producat-page" data-product-id="{{product.product_id}}"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
-              <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
-            </div>
-          </div>
+    <div class="product-layout col-xs-12 col-sm-6 col-md-4">
+			<div class="product-thumb transition">
+				<div class="adding-to-cart">
+				</div>
+				<div class="caption top-name">
+					<h4>
+						<a href="{{ product.href }}">{{ product.name }}</a>
+					</h4>
+				</div>
+				<div class="image">
+					<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/></a>
+				</div>
+
+				<div class="manager">
+					{% if product.quantity > 0 %}
+					<div class="price-manager">
+						<div class="caption bottom">
+							<h4>
+								<a href="{{ product.href }}">{{ product.name }}</a>
+							</h4>
+							<p>{{ product.description }}</p>
+							{% if product.price %}
+								<p class="price for-animated">
+									{% if not product.special %}
+										{{ product.price }}
+									{% else %}
+										<span class="price-new">{{ product.special }}</span>
+										<span class="price-old">{{ product.price }}</span>
+									{% endif %}
+								</p>
+							{% endif %}
+						</div>
+						<div class="button-group">
+							<button type="button" data-add-to-cart="data-add-to-cart" data-product-id="{{product.product_id}}">
+								<i class="fa fa-shopping-cart"></i>
+								<span class="  ">{{ button_cart }}</span>
+							</button>
+							<button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');">
+								<i class="fa fa-heart"></i>
+							</button>
+							<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');">
+								<i class="fa fa-exchange"></i>
+							</button>
+						</div>
+					</div>
+					<div class="quantity-manager">
+						<div class="quantity">
+							{% if product.upc %}
+								<span>
+									{% if product.upc == 'шт.' %}
+										{{1}}
+									{% elseif product.upc == 'кг.' %}
+										{{1}}
+									{% else %}
+										{{100}}
+									{% endif %}
+								</span>
+								<span>{{ product.upc }}</span>
+							{% endif %}
+						</div>
+						<div class="control">
+							<div class="decrease" data-upc="{{product.upc}}" data-quantity="{{product.quantity}}" data-price="{{product.price}}">
+								<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</div>
+							<div class="increase" data-upc="{{product.upc}}" data-quantity="{{product.quantity}}" data-price="{{product.price}}">
+								<i class="fa fa-angle-up" aria-hidden="true"></i>
+							</div>
+						</div>
+
+					</div>
+					{% else %}
+					<div class="out-of-stock"><p>Нет в наличии</p></div>
+					{% endif %}
+				</div>
+			</div>
         </div>
         {% if column_left and column_right and (i + 1) % 2 == 0 %}
         <div class="clearfix visible-md visible-sm"></div>

@@ -409,6 +409,8 @@ class ControllerProductProduct extends Controller {
 				}
 
 				$data['products'][] = array(
+          'upc' => $result['upc'],
+          'quantity' => $result['quantity'],
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
